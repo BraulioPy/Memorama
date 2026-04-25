@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Memorama.Application.Interfaces;
+using Memorama.Application.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,9 +16,17 @@ namespace Memorama
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // Agregamos "System.Windows.Forms." antes de cada Application para evitar que la situación esta se confunda con el
+            //Memorama.Application va?
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+
+            // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
+            IGameService gameService = new GameService();
+
+            // 2. Se lo pasamos al formulario por el constructor
+            // Esto es lo que hace que la arquitectura sea flexible
+            System.Windows.Forms.Application.Run(new Form1(gameService));
         }
     }
 }
