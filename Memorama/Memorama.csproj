@@ -76,5 +76,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Memorama.Application\Memorama.Application.csproj">
+      <Project>{b654856c-66ff-4f45-94f4-3e6e9c8c43f9}</Project>
+      <Name>Memorama.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Memorama.Domain\Memorama.Domain.csproj">
+      <Project>{bf47a449-e30f-41e9-8cc3-35addaa1ae54}</Project>
+      <Name>Memorama.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Memorama.Infrastructure\Memorama.Infrastructure.csproj">
+      <Project>{d1ae6133-139b-4365-a39c-90801ce4a642}</Project>
+      <Name>Memorama.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
