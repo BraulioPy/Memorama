@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Memorama.Application/Memorama.Application.csproj" Id="b654856c-66ff-4f45-94f4-3e6e9c8c43f9" />
   <Project Path="Memorama.Domain/Memorama.Domain.csproj" Id="bf47a449-e30f-41e9-8cc3-35addaa1ae54" />
+  <Project Path="Memorama.Infrastructure/Memorama.Infrastructure.csproj" Id="d1ae6133-139b-4365-a39c-90801ce4a642" />
   <Project Path="Memorama/Memorama.csproj" Id="28e6f916-7ef5-4fe7-b521-24d1a40129af" />
 </Solution>
