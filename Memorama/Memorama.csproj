@@ -50,8 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Components\ButtonOption.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\ButtonOption.Designer.cs">
+      <DependentUpon>ButtonOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MemoryButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\OptionMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\OptionMenu.Designer.cs">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -67,6 +79,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\Components\ButtonOption.resx">
+      <DependentUpon>ButtonOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Components\OptionMenu.resx">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
