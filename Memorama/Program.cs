@@ -26,7 +26,7 @@ namespace Memorama
 
             // 2. Se lo pasamos al formulario por el constructor
             // Esto es lo que hace que la arquitectura sea flexible
-            System.Windows.Forms.Application.Run(new JuegoForm(gameService));
+            System.Windows.Forms.Application.Run(new MenuPrincipal(gameService));
         }
     }
 }

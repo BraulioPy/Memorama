@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Memorama.Domain.ValueObjects;
 
 namespace Memorama.Controls.Components
 {
     public partial class ButtonOption : UserControl
     {
         //Definimos el evento y lo que retorna (los pares del nivel para que el tablero genere las cartas correspondientes)
-        public event Action<int> ChecarParesOpcion;
+        public event Action<GameInfoModelView> ConsultarConfiguracionBoton;
         public string Titulo
         {
             get => ButtonDesign.Text;
@@ -29,6 +30,7 @@ namespace Memorama.Controls.Components
                 panelColor.BackColor = value;
             }
         }
+        public GameInfoModelView ConfigurationGame { get; set; } = new GameInfoModelView();
         public ButtonOption()
         {
             InitializeComponent();
@@ -43,7 +45,7 @@ namespace Memorama.Controls.Components
 
         private void ButtonDesign_Click(object sender, EventArgs e)
         {
-            ChecarParesOpcion?.Invoke(CantidadPares);
+            ConsultarConfiguracionBoton?.Invoke(ConfigurationGame);
         }
 
     }

@@ -17,7 +17,7 @@ namespace Memorama.Controls
 {
     public partial class OptionMenu : UserControl
     {
-        public event Action<int> ConsultarNivelSeleccionado;
+        public event Action<GameInfoModelView> ConsultarConfiguracionDePartida;
         public OptionMenu()
         {
             InitializeComponent();
@@ -28,16 +28,22 @@ namespace Memorama.Controls
             for (int i = 0; i < Botones.Count; i++)
             {
                 var botonWidget = new ButtonOption() {
-                    Titulo = Botones[i]._Titulo,
+                    Titulo = Botones[i]._ModoDeJuego,
                     CantidadPares = Botones[i]._Pares,
                     // Convertimos el string de Domain a un Color de UI
                     ColorNivel = ColorTranslator.FromHtml(Botones[i].ColorHex),
-
+                    ConfigurationGame = new GameInfoModelView
+                    {
+                        CartasTotales = Botones[i]._CartasTotales,
+                        Segundos = Botones[i]._Segundos,
+                        ModoDeJuego = Botones[i]._ModoDeJuego,
+                        ColorHex = Botones[i].ColorHex
+                    }
                 };
 
-                botonWidget.ChecarParesOpcion += (opcion) =>
+                botonWidget.ConsultarConfiguracionBoton += (config) =>
                 {
-                    ConsultarNivelSeleccionado?.Invoke(opcion);
+                    ConsultarConfiguracionDePartida?.Invoke(config);
                 };
                 ButtonsMenuFlow.Controls.Add(botonWidget);
             }

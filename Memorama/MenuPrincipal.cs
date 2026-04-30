@@ -35,14 +35,18 @@ namespace Memorama
             _MenuBotones.Dock = DockStyle.Fill; // <--- aqui hacemos que se llene con el ancho dispoible
 
             List<MenuButtonModelView> BotonesDisponibles = new List<MenuButtonModelView> {
-                new MenuButtonModelView{_Titulo = "FÁCIL", _Pares = 8, ColorHex = "#4CAF50" }, //Verde clarito
-                new MenuButtonModelView{_Titulo = "INTERMEDIO", _Pares = 16, ColorHex = "#FFC107" }, //(Ámbar/Amarillo mate)
-                new MenuButtonModelView{_Titulo = "DÍFICIL", _Pares = 24, ColorHex = "#F44336" } //Rojo Material
+                new MenuButtonModelView{_ModoDeJuego = "FÁCIL", _CartasTotales = 16,_Segundos = 180, ColorHex = "#4CAF50" }, //Verde clarito
+                new MenuButtonModelView{_ModoDeJuego = "INTERMEDIO", _CartasTotales = 32,_Segundos = 120, ColorHex = "#FFC107" }, //(Ámbar/Amarillo mate)
+                new MenuButtonModelView{_ModoDeJuego = "DÍFICIL", _CartasTotales = 50,_Segundos = 90, ColorHex = "#F44336" } //Rojo Material
             };
             _MenuBotones.SetConfiguracion(BotonesDisponibles);
-            _MenuBotones.ConsultarNivelSeleccionado += (pares) =>
+            _MenuBotones.ConsultarConfiguracionDePartida += (config) =>
             {
-                ayudaLabel.Text = $"Nivel seleccionado con {pares} pares.";
+                JuegoForm TableroJuego = new JuegoForm(_gameService, config);
+                TableroJuego.FormClosed += (s, arg) => this.Show(); // Volver a mostrar el menú cuando se cierre el tablero
+                TableroJuego.Show();
+                this.Hide();
+                //ayudaLabel.Text = $"Nivel seleccionado con {config.Pares} pares.";
             };
             tableroLayoutPanel.Controls.Add(_MenuBotones, 0, 1);
         }
