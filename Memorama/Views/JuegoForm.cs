@@ -68,6 +68,5 @@ namespace Memorama
             ((MemoryButton)panelTablero.Controls[idx2]).Ocultar();
         }
 
-
     }
 }
