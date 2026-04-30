@@ -13,10 +13,10 @@ using Memorama.Controls;
 
 namespace Memorama
 {
-    public partial class Form1 : Form
+    public partial class JuegoForm : Form
     {
         private readonly IGameService _gameService;
-        public Form1(IGameService gameService)
+        public JuegoForm(IGameService gameService)
         {
             InitializeComponent();
             _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs

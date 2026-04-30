@@ -1,6 +1,6 @@
 ﻿namespace Memorama
 {
-    partial class Form1
+    partial class JuegoForm
     {
         /// <summary>
         /// Variable del diseñador necesaria.
