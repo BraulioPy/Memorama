@@ -10,16 +10,19 @@ using System.Windows.Forms;
 using Memorama.Application.Interfaces;
 using Memorama.Application.Services;
 using Memorama.Controls;
+using Memorama.Domain.ValueObjects;
 
 namespace Memorama
 {
-    public partial class Form1 : Form
+    public partial class JuegoForm : Form
     {
         private readonly IGameService _gameService;
-        public Form1(IGameService gameService)
+        private readonly GameInfoModelView _gameInfo;
+        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo)
         {
             InitializeComponent();
             _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
+            _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
 
             // Suscribirnos a los eventos del servicio
             _gameService.OnCartaRevelada = (idx, val) => ActualizarBoton(idx, val);
@@ -31,10 +34,10 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
-            _gameService.IniciarNuevaPartida(20);
+            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales);
 
             // Generación automática de botones
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < _gameInfo.CartasTotales; i++)
             {
                 var btn = new MemoryButton(i);
                 btn.Click += (s, ev) => _gameService.SeleccionarCarta(btn.Indice);
@@ -67,7 +70,6 @@ namespace Memorama
             ((MemoryButton)panelTablero.Controls[idx1]).Ocultar();
             ((MemoryButton)panelTablero.Controls[idx2]).Ocultar();
         }
-
 
     }
 }

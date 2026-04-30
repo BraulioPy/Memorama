@@ -1,6 +1,6 @@
 ﻿namespace Memorama
 {
-    partial class Form1
+    partial class JuegoForm
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -30,27 +30,42 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelTablero = new System.Windows.Forms.FlowLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label_tiempo = new System.Windows.Forms.Label();
             this.button21 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.timer_partida = new System.Windows.Forms.Timer(this.components);
-            this.panelTablero.SuspendLayout();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTablero
             // 
-            this.panelTablero.Controls.Add(this.label1);
-            this.panelTablero.Controls.Add(this.label2);
-            this.panelTablero.Controls.Add(this.label3);
-            this.panelTablero.Controls.Add(this.label_tiempo);
-            this.panelTablero.Controls.Add(this.button21);
-            this.panelTablero.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTablero.Location = new System.Drawing.Point(0, 0);
+            this.panelTablero.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelTablero.Location = new System.Drawing.Point(0, 47);
             this.panelTablero.Name = "panelTablero";
-            this.panelTablero.Size = new System.Drawing.Size(800, 450);
+            this.panelTablero.Size = new System.Drawing.Size(800, 403);
             this.panelTablero.TabIndex = 0;
+            // 
+            // label_tiempo
+            // 
+            this.label_tiempo.AutoSize = true;
+            this.label_tiempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_tiempo.Location = new System.Drawing.Point(144, 0);
+            this.label_tiempo.Name = "label_tiempo";
+            this.label_tiempo.Size = new System.Drawing.Size(39, 25);
+            this.label_tiempo.TabIndex = 3;
+            this.label_tiempo.Text = "0.0";
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(189, 3);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(88, 38);
+            this.button21.TabIndex = 4;
+            this.button21.Text = "Iniciar";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // label1
             // 
@@ -72,51 +87,34 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "......";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(144, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(166, 25);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Tiempo Restante:";
-            // 
-            // label_tiempo
-            // 
-            this.label_tiempo.AutoSize = true;
-            this.label_tiempo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_tiempo.Location = new System.Drawing.Point(316, 0);
-            this.label_tiempo.Name = "label_tiempo";
-            this.label_tiempo.Size = new System.Drawing.Size(39, 25);
-            this.label_tiempo.TabIndex = 3;
-            this.label_tiempo.Text = "0.0";
-            // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(361, 3);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(88, 38);
-            this.button21.TabIndex = 4;
-            this.button21.Text = "Iniciar";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
-            // 
             // timer_partida
             // 
             this.timer_partida.Interval = 1000;
             this.timer_partida.Tick += new System.EventHandler(this.timer_partida_Tick_1);
             // 
-            // Form1
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.label1);
+            this.flowLayoutPanel1.Controls.Add(this.label2);
+            this.flowLayoutPanel1.Controls.Add(this.label_tiempo);
+            this.flowLayoutPanel1.Controls.Add(this.button21);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(800, 46);
+            this.flowLayoutPanel1.TabIndex = 1;
+            // 
+            // JuegoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panelTablero);
-            this.Name = "Form1";
+            this.Name = "JuegoForm";
             this.Text = "Form1";
-            this.panelTablero.ResumeLayout(false);
-            this.panelTablero.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -126,10 +124,10 @@
         private System.Windows.Forms.FlowLayoutPanel panelTablero;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label_tiempo;
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Timer timer_partida;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
 
