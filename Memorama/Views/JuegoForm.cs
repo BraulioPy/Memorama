@@ -37,12 +37,20 @@ namespace Memorama
                 if (_gameService.Segundos <= 0)
                 {
                     MessageBox.Show("¡Game Over! Se acabó el tiempo.");
+                    this.Close(); // Cerramos el formulario para volver al menú principal
                 }
                 else
                 {
-                    MessageBox.Show("¡Felicidades! Completaste el tablero.");
+                    if (_gameService.Intentos > _gameInfo.Intentos)
+                    {
+                        MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
+                        this.Close();
+                    }
+                    else {
+                        MessageBox.Show("¡Felicidades! Completaste el tablero.");
+                        this.Close();
+                    }
                 }
-
                 button21.Visible = true; // Volvemos a mostrar el botón de inicio[cite: 1]
             };
         }
@@ -50,7 +58,7 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
-            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos);
+            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos);
 
             // Generación automática de botones
             for (int i = 0; i < _gameInfo.CartasTotales; i++)
@@ -65,7 +73,7 @@ namespace Memorama
         {
             _gameService.AvanzarTiempo();
             label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
-            label2.Text = _gameService.Intentos.ToString();
+            label2.Text = "Intentos: " + _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
             button21.Visible = false;
 
         }
