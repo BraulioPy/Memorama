@@ -26,14 +26,10 @@ namespace Memorama.Application.Services
         public System.Action<int, int> OnParejaNoEncontrada { get; set; }
         public System.Action OnPartidaFinalizada { get; set; }
 
-        public GameService()
-        {
-        }
-
         public void IniciarNuevaPartida(int totalCartas, int _segundosTotales)
         {
             _tablero = new Tablero();
-            _partida = new Partida(10, _segundosTotales); // 10 parejas por defecto
+            _partida = new Partida(totalCartas/2, _segundosTotales); // 10 parejas por defecto
 
             _tablero.GenerarCartas(totalCartas);
             _tablero.Mezclar();
@@ -44,6 +40,12 @@ namespace Memorama.Application.Services
 
         public void AvanzarTiempo()
         {
+            // Si el tiempo llega a 0 y la partida no se había ganado ya
+            if (_partida.SegundosTranscurridos <= 0 && !_partida.EstaFinalizada)
+            {
+                _partida.ForzarFinalizacion(); //[cite: 3]
+                OnPartidaFinalizada?.Invoke(); // Disparamos el evento hacia la UI
+            }
             _partida.DecrementarTiempo();
         }
 

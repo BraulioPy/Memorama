@@ -36,10 +36,15 @@ namespace Memorama.Domain.Entities
                 EstaFinalizada = true;
             }
         }
+        public void ForzarFinalizacion()
+        {
+            EstaFinalizada = true;
+        }
 
         public void DecrementarTiempo()
         {
-            SegundosTranscurridos--;
+            if (SegundosTranscurridos > 0)
+                SegundosTranscurridos--;
         }
         public void Reiniciar()
         {
