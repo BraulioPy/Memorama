@@ -10,13 +10,16 @@ namespace Memorama.Domain.Entities
     {
         public int Intentos { get; private set; }
         public int SegundosTranscurridos { get; private set; }
+        public int SegundosTotales { get; private set; }
         public int ParesEncontrados { get; private set; }
         public bool EstaFinalizada { get; private set; }
         public int TotalParesObjetivo { get; private set; }
 
-        public Partida(int totalParesObjetivo)
+        public Partida(int totalParesObjetivo, int segundosTotales)
         {
             TotalParesObjetivo = totalParesObjetivo;
+            SegundosTotales = segundosTotales;
+            SegundosTranscurridos = SegundosTotales;
             Reiniciar();
         }
 
@@ -34,15 +37,15 @@ namespace Memorama.Domain.Entities
             }
         }
 
-        public void IncrementarTiempo()
+        public void DecrementarTiempo()
         {
-            SegundosTranscurridos++;
+            SegundosTranscurridos--;
         }
-
         public void Reiniciar()
         {
             Intentos = 0;
-            SegundosTranscurridos = 0;
+            SegundosTranscurridos = SegundosTotales;
+            
             ParesEncontrados = 0;
             EstaFinalizada = false;
         }

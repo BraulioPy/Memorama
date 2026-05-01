@@ -34,7 +34,7 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
-            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales);
+            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos);
 
             // Generación automática de botones
             for (int i = 0; i < _gameInfo.CartasTotales; i++)

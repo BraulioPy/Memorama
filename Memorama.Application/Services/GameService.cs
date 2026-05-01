@@ -28,12 +28,13 @@ namespace Memorama.Application.Services
 
         public GameService()
         {
-            _tablero = new Tablero();
-            _partida = new Partida(10); // 10 parejas por defecto
         }
 
-        public void IniciarNuevaPartida(int totalCartas)
+        public void IniciarNuevaPartida(int totalCartas, int _segundosTotales)
         {
+            _tablero = new Tablero();
+            _partida = new Partida(10, _segundosTotales); // 10 parejas por defecto
+
             _tablero.GenerarCartas(totalCartas);
             _tablero.Mezclar();
             _partida.Reiniciar();
@@ -43,7 +44,7 @@ namespace Memorama.Application.Services
 
         public void AvanzarTiempo()
         {
-            _partida.IncrementarTiempo();
+            _partida.DecrementarTiempo();
         }
 
         public async void SeleccionarCarta(int indice)

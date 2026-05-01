@@ -15,7 +15,7 @@ namespace Memorama.Application.Interfaces
         bool EstaBloqueado { get; }
 
         // Métodos de control
-        void IniciarNuevaPartida(int totalCartas);
+        void IniciarNuevaPartida(int totalCartas, int _segundosTotales);
         void SeleccionarCarta(int indice);
         void AvanzarTiempo();
 
