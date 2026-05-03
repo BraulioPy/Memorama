@@ -16,6 +16,7 @@ using MaterialSkin.Controls;
 using Memorama.Application.Constants;
 using Memorama.Application.DTOs.Records;
 using System.Drawing.Text;
+using Memorama.Application.DTOs.OnTime;
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
@@ -23,10 +24,20 @@ namespace Memorama
         private readonly IGameService _gameService;
         private readonly GameInfoModelView _gameInfo;
         private readonly IPersistenceService _dbManager;
+        private readonly JuegoUIManager _uiManager;
+        private readonly int _notifyFrequence;
+        private readonly IMotivationService _motivationService;
 
-        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager)
+        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager, IMotivationService motivationService)
         {
             InitializeComponent();
+
+            _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
+            _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
+            _dbManager = dbManager;
+            _uiManager = new JuegoUIManager(this); // Creamos una instancia del gestor de UI, pasándole el formulario actual
+            _motivationService = motivationService; // Guardamos la referencia al servicio de motivación
+            _notifyFrequence = (gameInfo.Segundos / 60) * 4;
 
             //aqui ya empiezan los cambios que hice yo
 
@@ -53,11 +64,10 @@ namespace Memorama
             panelTablero.BackColor = Color.Transparent;
             button21.BackColor = Color.Transparent;
 
-            Transparente(label_Info);
-            Transparente(label_tiempo);
-            Transparente(n_intentos);
-            Transparente(Intentos);
-
+            _uiManager.Transparente(PanelFondo, label_Info);
+            _uiManager.Transparente(PanelFondo, label_tiempo);
+            _uiManager.Transparente(PanelFondo, n_intentos);
+            _uiManager.Transparente(PanelFondo, Intentos);
             //Dibuja la imagen de fondo en la posicion correcta para simular transparencia
             panelTablero.Paint += (s, e) =>
             {
@@ -102,9 +112,6 @@ namespace Memorama
 
             //aqui terminan :3
 
-            _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
-            _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
-            _dbManager = dbManager;
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -130,12 +137,12 @@ namespace Memorama
                     IntentosUsados = _gameService.Intentos,
                     IntentosTotales = _gameInfo.Intentos
                 };
+                List<GameRecordDTO> ExistingRecordData = _dbManager.Load<List<GameRecordDTO>>(StorageKeys.Records) ?? new List<GameRecordDTO>();
 
                 // Consultamos al servicio para saber por qué terminó
                 if (_gameService.Segundos <= 0)
                 {
                     gameFinishedData.EsVictoria = false;
-                    _dbManager.Save(StorageKeys.Records, gameFinishedData);
                     MessageBox.Show("¡Game Over! Se acabó el tiempo.");
                     this.Close(); // Cerramos el formulario para volver al menú principal
                 }
@@ -144,17 +151,17 @@ namespace Memorama
                     if (_gameService.Intentos > _gameInfo.Intentos)
                     {
                         gameFinishedData.EsVictoria = false;
-                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
                         this.Close();
                     }
                     else {
                         gameFinishedData.EsVictoria = true;
-                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show("¡Felicidades! Completaste el tablero.");
                         this.Close();
                     }
                 }
+                ExistingRecordData.Add(gameFinishedData);
+                _dbManager.Save(StorageKeys.Records, ExistingRecordData);
                 button21.Visible = true; // Volvemos a mostrar el botón de inicio[cite: 1]
             };
         }
@@ -187,19 +194,28 @@ namespace Memorama
                 btn.Click += (s, ev) => _gameService.SeleccionarCarta(btn.Indice);
                 panelTablero.Controls.Add(btn);
             }
-
             //YIYIcambio
             panelTablero.Invalidate();
-
-
             timer_partida.Start();
+            button21.Visible = false;
         }
         private void timer_partida_Tick_1(object sender, EventArgs e)
         {
             _gameService.AvanzarTiempo();
             label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
             n_intentos.Text = _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
-            button21.Visible = false;
+            OnTimeGameDataInfoDTO OnTimeGameInfo = new OnTimeGameDataInfoDTO() { 
+                ModoDeJuego = _gameInfo.ModoDeJuego,
+                CartasTotales = _gameInfo.CartasTotales,
+                IntentosActuales = _gameService.Intentos,
+                SegundosActuales = _gameService.Segundos
+            };
+            if (_gameService.Segundos > 0 && _gameService.Segundos % _notifyFrequence == 0)
+            {
+                _uiManager.MostrarAviso(_motivationService.GenerarMensajeFinal(
+                    OnTimeGameInfo
+                    ), 2); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
+            }
 
         }
 
@@ -221,22 +237,6 @@ namespace Memorama
             ((MemoryButton)panelTablero.Controls[idx1]).Ocultar();
             ((MemoryButton)panelTablero.Controls[idx2]).Ocultar();
         }
-        private void Transparente(Label label)
-        {
-            label.Paint += (s, e) =>
-            {
-                Point loc = PanelFondo.PointToClient(label.PointToScreen(Point.Empty));
-                e.Graphics.DrawImage(
-                    PanelFondo.BackgroundImage,
-                    new Rectangle(0, 0, label.Width, label.Height),
-                    new Rectangle(
-                        loc.X * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
-                        loc.Y * PanelFondo.BackgroundImage.Height / PanelFondo.Height,
-                        label.Width * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
-                        label.Height * PanelFondo.BackgroundImage.Height / PanelFondo.Height),
-                    GraphicsUnit.Pixel);
-                e.Graphics.DrawString(label.Text, label.Font, Brushes.White, 0, 0);
-            };
-        }
+
     }
 }

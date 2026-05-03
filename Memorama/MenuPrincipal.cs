@@ -19,12 +19,14 @@ namespace Memorama
     {
         private readonly IGameService _gameService;
         private readonly IPersistenceService _dbManager;
-        public MenuPrincipal(IGameService gameService, IPersistenceService dbManager)
+        private readonly IMotivationService _motivatioService;
+        public MenuPrincipal(IGameService gameService, IPersistenceService dbManager, IMotivationService motivationService)
         {
             InitializeComponent();
       
             _gameService = gameService; //Lo uso para luego mandarle la inyección del servicio al form que invoque jaja
             _dbManager = dbManager;
+            _motivatioService = motivationService;
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -45,9 +47,9 @@ namespace Memorama
             _MenuBotones.SetConfiguracion(BotonesDisponibles);
             _MenuBotones.ConsultarConfiguracionDePartida += (config) =>
             {
-                JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager);
+                JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
                 TableroJuego.FormClosed += (s, arg) =>{
-                    MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager);
+                    MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
                     Program.contexto.MainForm = nuevoMenu;
                     nuevoMenu.Show();
                 };

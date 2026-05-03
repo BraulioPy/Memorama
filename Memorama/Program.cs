@@ -26,9 +26,10 @@ namespace Memorama
             // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
             IGameService gameService = new GameService();
             IPersistenceService dbManager = new PersistenceService();
+            IMotivationService motivationService = new MotivationService(dbManager);
 
             contexto = new ApplicationContext();
-            MenuPrincipal menu = new MenuPrincipal(gameService, dbManager);
+            MenuPrincipal menu = new MenuPrincipal(gameService, dbManager, motivationService);
             contexto.MainForm = menu;
             menu.Show();
 
