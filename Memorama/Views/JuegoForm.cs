@@ -16,6 +16,7 @@ using MaterialSkin.Controls;
 using Memorama.Application.Constants;
 using Memorama.Application.DTOs.Records;
 using System.Drawing.Text;
+using Memorama.Application.DTOs.OnTime;
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
@@ -24,8 +25,10 @@ namespace Memorama
         private readonly GameInfoModelView _gameInfo;
         private readonly IPersistenceService _dbManager;
         private readonly JuegoUIManager _uiManager;
+        private readonly int _notifyFrequence;
+        private readonly IMotivationService _motivationService;
 
-        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager)
+        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager, IMotivationService motivationService)
         {
             InitializeComponent();
 
@@ -33,6 +36,8 @@ namespace Memorama
             _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
             _dbManager = dbManager;
             _uiManager = new JuegoUIManager(this); // Creamos una instancia del gestor de UI, pasándole el formulario actual
+            _motivationService = motivationService; // Guardamos la referencia al servicio de motivación
+            _notifyFrequence = (gameInfo.Segundos / 60) * 4;
 
             //aqui ya empiezan los cambios que hice yo
 
@@ -199,6 +204,19 @@ namespace Memorama
             _gameService.AvanzarTiempo();
             label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
             n_intentos.Text = _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
+            OnTimeGameDataInfoDTO OnTimeGameInfo = new OnTimeGameDataInfoDTO() { 
+                ModoDeJuego = _gameInfo.ModoDeJuego,
+                CartasTotales = _gameInfo.CartasTotales,
+                IntentosActuales = _gameService.Intentos,
+                SegundosActuales = _gameService.Segundos
+            };
+            if (_gameService.Segundos > 0 && _gameService.Segundos % _notifyFrequence == 0)
+            {
+                _uiManager.MostrarAviso(_motivationService.GenerarMensajeFinal(
+                    OnTimeGameInfo
+                    ), 2); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
+            }
+
         }
 
         // Métodos de ayuda para la UI
