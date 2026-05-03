@@ -13,7 +13,6 @@ using Memorama.Controls;
 using Memorama.Domain.ValueObjects;
 using MaterialSkin;
 using MaterialSkin.Controls;
-
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
@@ -179,7 +178,7 @@ namespace Memorama
         {
             _gameService.AvanzarTiempo();
             label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
-            label2.Text = "Intentos: " + _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
+            n_intentos.Text = "Intentos: " + _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
             button21.Visible = false;
 
         }
