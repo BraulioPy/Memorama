@@ -9,14 +9,19 @@ namespace Memorama.Domain.Entities
     public class Partida
     {
         public int Intentos { get; private set; }
+        public int IntentosMaximos { get; private set; }
         public int SegundosTranscurridos { get; private set; }
+        public int SegundosTotales { get; private set; }
         public int ParesEncontrados { get; private set; }
         public bool EstaFinalizada { get; private set; }
         public int TotalParesObjetivo { get; private set; }
 
-        public Partida(int totalParesObjetivo)
+        public Partida(int totalParesObjetivo, int segundosTotales, int intentosMaximos)
         {
             TotalParesObjetivo = totalParesObjetivo;
+            SegundosTotales = segundosTotales;
+            SegundosTranscurridos = SegundosTotales;
+            IntentosMaximos = intentosMaximos;
             Reiniciar();
         }
 
@@ -33,16 +38,21 @@ namespace Memorama.Domain.Entities
                 EstaFinalizada = true;
             }
         }
-
-        public void IncrementarTiempo()
+        public void ForzarFinalizacion()
         {
-            SegundosTranscurridos++;
+            EstaFinalizada = true;
         }
 
+        public void DecrementarTiempo()
+        {
+            if (SegundosTranscurridos > 0)
+                SegundosTranscurridos--;
+        }
         public void Reiniciar()
         {
             Intentos = 0;
-            SegundosTranscurridos = 0;
+            SegundosTranscurridos = SegundosTotales;
+            
             ParesEncontrados = 0;
             EstaFinalizada = false;
         }
