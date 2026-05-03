@@ -10,6 +10,7 @@ namespace Memorama
 {
     internal static class Program
     {
+        public static ApplicationContext contexto;
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
@@ -24,9 +25,14 @@ namespace Memorama
             // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
             IGameService gameService = new GameService();
 
+            contexto = new ApplicationContext();
+            MenuPrincipal menu = new MenuPrincipal(gameService);
+            contexto.MainForm = menu;
+            menu.Show();
+
             // 2. Se lo pasamos al formulario por el constructor
             // Esto es lo que hace que la arquitectura sea flexible
-            System.Windows.Forms.Application.Run(new MenuPrincipal(gameService));
+            System.Windows.Forms.Application.Run(contexto);
         }
     }
 }

@@ -35,11 +35,12 @@
             // 
             // ButtonsMenuFlow
             // 
-            this.ButtonsMenuFlow.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ButtonsMenuFlow.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ButtonsMenuFlow.AutoSize = true;
             this.ButtonsMenuFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ButtonsMenuFlow.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.ButtonsMenuFlow.Location = new System.Drawing.Point(122, 3);
+            this.ButtonsMenuFlow.Location = new System.Drawing.Point(92, 129);
+            this.ButtonsMenuFlow.Margin = new System.Windows.Forms.Padding(2);
             this.ButtonsMenuFlow.Name = "ButtonsMenuFlow";
             this.ButtonsMenuFlow.Size = new System.Drawing.Size(0, 0);
             this.ButtonsMenuFlow.TabIndex = 0;
@@ -47,28 +48,35 @@
             // 
             // centradorLayout
             // 
+            this.centradorLayout.AutoSize = true;
+            this.centradorLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.centradorLayout.BackColor = System.Drawing.Color.Transparent;
             this.centradorLayout.ColumnCount = 1;
             this.centradorLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.centradorLayout.Controls.Add(this.ButtonsMenuFlow, 0, 0);
             this.centradorLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.centradorLayout.Location = new System.Drawing.Point(0, 0);
+            this.centradorLayout.Margin = new System.Windows.Forms.Padding(0);
             this.centradorLayout.Name = "centradorLayout";
-            this.centradorLayout.RowCount = 2;
-            this.centradorLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.centradorLayout.RowCount = 1;
             this.centradorLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.centradorLayout.Size = new System.Drawing.Size(245, 319);
+            this.centradorLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 259F));
+            this.centradorLayout.Size = new System.Drawing.Size(184, 259);
             this.centradorLayout.TabIndex = 0;
             // 
             // OptionMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.centradorLayout);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OptionMenu";
-            this.Size = new System.Drawing.Size(245, 319);
+            this.Size = new System.Drawing.Size(184, 259);
             this.centradorLayout.ResumeLayout(false);
             this.centradorLayout.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

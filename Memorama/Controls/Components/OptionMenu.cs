@@ -47,6 +47,14 @@ namespace Memorama.Controls
                 };
                 ButtonsMenuFlow.Controls.Add(botonWidget);
             }
+            ButtonsMenuFlow.Padding = new Padding(0);
+            ButtonsMenuFlow.Margin = new Padding(0);
+
+            ButtonsMenuFlow.AutoSize = true;
+            ButtonsMenuFlow.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
     }
 }

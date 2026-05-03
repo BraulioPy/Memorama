@@ -40,7 +40,14 @@ namespace Memorama.Controls.Components
             
             // L-T-R-B: Izquierda, Arriba, Derecha, Abajo
             // Un margen de 10 en Top y Bottom creará una separación de 20px entre botones
-            this.Margin = new Padding(0, 5, 0, 5);
+            this.Margin = new Padding(0, 0, 0, 0);
+            ButtonDesign.Margin = new Padding(0, 0, 0, 0);
+
+            ButtonDesign.UseAccentColor = false;
+
+            ButtonDesign.HighEmphasis = false;
+
+            ButtonDesign.ForeColor = Color.FromArgb(33, 33, 33);
         }
 
         private void ButtonDesign_Click(object sender, EventArgs e)
