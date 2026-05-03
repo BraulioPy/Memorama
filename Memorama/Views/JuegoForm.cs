@@ -59,11 +59,10 @@ namespace Memorama
             panelTablero.BackColor = Color.Transparent;
             button21.BackColor = Color.Transparent;
 
-            Transparente(label_Info);
-            Transparente(label_tiempo);
-            Transparente(n_intentos);
-            Transparente(Intentos);
-
+            _uiManager.Transparente(PanelFondo, label_Info);
+            _uiManager.Transparente(PanelFondo, label_tiempo);
+            _uiManager.Transparente(PanelFondo, n_intentos);
+            _uiManager.Transparente(PanelFondo, Intentos);
             //Dibuja la imagen de fondo en la posicion correcta para simular transparencia
             panelTablero.Paint += (s, e) =>
             {
@@ -194,9 +193,6 @@ namespace Memorama
             panelTablero.Invalidate();
             timer_partida.Start();
             button21.Visible = false;
-
-            // Forma súper rápida de mostrar un aviso tipo "Logro"
-            _uiManager.MostrarAviso("¡NIVEL SUPERADO! Eres un crack 🏆🎉", 2);
         }
         private void timer_partida_Tick_1(object sender, EventArgs e)
         {
@@ -223,22 +219,6 @@ namespace Memorama
             ((MemoryButton)panelTablero.Controls[idx1]).Ocultar();
             ((MemoryButton)panelTablero.Controls[idx2]).Ocultar();
         }
-        private void Transparente(Label label)
-        {
-            label.Paint += (s, e) =>
-            {
-                Point loc = PanelFondo.PointToClient(label.PointToScreen(Point.Empty));
-                e.Graphics.DrawImage(
-                    PanelFondo.BackgroundImage,
-                    new Rectangle(0, 0, label.Width, label.Height),
-                    new Rectangle(
-                        loc.X * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
-                        loc.Y * PanelFondo.BackgroundImage.Height / PanelFondo.Height,
-                        label.Width * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
-                        label.Height * PanelFondo.BackgroundImage.Height / PanelFondo.Height),
-                    GraphicsUnit.Pixel);
-                e.Graphics.DrawString(label.Text, label.Font, Brushes.White, 0, 0);
-            };
-        }
+
     }
 }

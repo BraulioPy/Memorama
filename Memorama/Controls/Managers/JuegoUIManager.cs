@@ -72,4 +72,22 @@ public class JuegoUIManager
         };
         t.Start();
     }
+
+    public void Transparente(Panel PanelFondo , Label label)
+    {
+        label.Paint += (s, e) =>
+        {
+            Point loc = PanelFondo.PointToClient(label.PointToScreen(Point.Empty));
+            e.Graphics.DrawImage(
+                PanelFondo.BackgroundImage,
+                new Rectangle(0, 0, label.Width, label.Height),
+                new Rectangle(
+                    loc.X * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
+                    loc.Y * PanelFondo.BackgroundImage.Height / PanelFondo.Height,
+                    label.Width * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
+                    label.Height * PanelFondo.BackgroundImage.Height / PanelFondo.Height),
+                GraphicsUnit.Pixel);
+            e.Graphics.DrawString(label.Text, label.Font, Brushes.White, 0, 0);
+        };
+    }
 }
