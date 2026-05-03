@@ -23,10 +23,16 @@ namespace Memorama
         private readonly IGameService _gameService;
         private readonly GameInfoModelView _gameInfo;
         private readonly IPersistenceService _dbManager;
+        private readonly JuegoUIManager _uiManager;
 
         public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager)
         {
             InitializeComponent();
+
+            _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
+            _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
+            _dbManager = dbManager;
+            _uiManager = new JuegoUIManager(this); // Creamos una instancia del gestor de UI, pasándole el formulario actual
 
             //aqui ya empiezan los cambios que hice yo
 
@@ -102,9 +108,6 @@ namespace Memorama
 
             //aqui terminan :3
 
-            _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
-            _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
-            _dbManager = dbManager;
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -187,20 +190,19 @@ namespace Memorama
                 btn.Click += (s, ev) => _gameService.SeleccionarCarta(btn.Indice);
                 panelTablero.Controls.Add(btn);
             }
-
             //YIYIcambio
             panelTablero.Invalidate();
-
-
             timer_partida.Start();
+            button21.Visible = false;
+
+            // Forma súper rápida de mostrar un aviso tipo "Logro"
+            _uiManager.MostrarAviso("¡NIVEL SUPERADO! Eres un crack 🏆🎉", 2);
         }
         private void timer_partida_Tick_1(object sender, EventArgs e)
         {
             _gameService.AvanzarTiempo();
             label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
             n_intentos.Text = _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
-            button21.Visible = false;
-
         }
 
         // Métodos de ayuda para la UI

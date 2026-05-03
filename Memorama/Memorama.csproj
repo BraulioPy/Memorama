@@ -56,6 +56,7 @@
     <Compile Include="Controls\Components\ButtonOption.Designer.cs">
       <DependentUpon>ButtonOption.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Managers\JuegoUIManager.cs" />
     <Compile Include="Controls\MemoryButton.cs">
       <SubType>Component</SubType>
     </Compile>
