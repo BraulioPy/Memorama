@@ -130,12 +130,12 @@ namespace Memorama
                     IntentosUsados = _gameService.Intentos,
                     IntentosTotales = _gameInfo.Intentos
                 };
+                List<GameRecordDTO> ExistingRecordData = _dbManager.Load<List<GameRecordDTO>>(StorageKeys.Records) ?? new List<GameRecordDTO>();
 
                 // Consultamos al servicio para saber por qué terminó
                 if (_gameService.Segundos <= 0)
                 {
                     gameFinishedData.EsVictoria = false;
-                    _dbManager.Save(StorageKeys.Records, gameFinishedData);
                     MessageBox.Show("¡Game Over! Se acabó el tiempo.");
                     this.Close(); // Cerramos el formulario para volver al menú principal
                 }
@@ -144,17 +144,17 @@ namespace Memorama
                     if (_gameService.Intentos > _gameInfo.Intentos)
                     {
                         gameFinishedData.EsVictoria = false;
-                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
                         this.Close();
                     }
                     else {
                         gameFinishedData.EsVictoria = true;
-                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show("¡Felicidades! Completaste el tablero.");
                         this.Close();
                     }
                 }
+                ExistingRecordData.Add(gameFinishedData);
+                _dbManager.Save(StorageKeys.Records, ExistingRecordData);
                 button21.Visible = true; // Volvemos a mostrar el botón de inicio[cite: 1]
             };
         }
