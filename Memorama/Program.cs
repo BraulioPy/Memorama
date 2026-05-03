@@ -1,5 +1,6 @@
 ﻿using Memorama.Application.Interfaces;
 using Memorama.Application.Services;
+using Memorama.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,10 @@ namespace Memorama
 
             // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
             IGameService gameService = new GameService();
+            IPersistenceService dbManager = new PersistenceService();
 
             contexto = new ApplicationContext();
-            MenuPrincipal menu = new MenuPrincipal(gameService);
+            MenuPrincipal menu = new MenuPrincipal(gameService, dbManager);
             contexto.MainForm = menu;
             menu.Show();
 
