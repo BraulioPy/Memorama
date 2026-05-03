@@ -10,7 +10,8 @@ namespace Memorama.Application.DTOs.Records
     {
         public string ModoDeJuego { get; set; }
         public int CartasTotales { get; set; } = 0;
-        public int Segundos { get; set; } = 0;
+        public int SegundosUsados { get; set; } = 0;
+        public int SegundosTotales { get; set; } = 0;
         public int IntentosUsados { get; set; } = 0;
         public int IntentosTotales { get; set; } = 0;
         public bool EsVictoria { get; set; } = false;

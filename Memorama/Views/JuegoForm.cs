@@ -13,14 +13,18 @@ using Memorama.Controls;
 using Memorama.Domain.ValueObjects;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Memorama.Application.Constants;
+using Memorama.Application.DTOs.Records;
+using System.Drawing.Text;
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
     {
         private readonly IGameService _gameService;
         private readonly GameInfoModelView _gameInfo;
+        private readonly IPersistenceService _dbManager;
 
-        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo)
+        public JuegoForm(IGameService gameService, GameInfoModelView gameInfo, IPersistenceService dbManager)
         {
             InitializeComponent();
 
@@ -100,6 +104,7 @@ namespace Memorama
 
             _gameService = gameService; // Guardamos la referencia que nos mandó Program.cs
             _gameInfo = gameInfo; // Guardamos la configuración del juego que nos mandó MenuPrincipal.cs
+            _dbManager = dbManager;
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -116,10 +121,21 @@ namespace Memorama
             _gameService.OnPartidaFinalizada = () =>
             {
                 timer_partida.Stop(); // IMPORTANTE: Detenemos el Tick físicamente
+                GameRecordDTO gameFinishedData = new GameRecordDTO()
+                {
+                    ModoDeJuego = _gameInfo.ModoDeJuego,
+                    CartasTotales = _gameInfo.CartasTotales,
+                    SegundosUsados = _gameService.Segundos,
+                    SegundosTotales = _gameInfo.Segundos,
+                    IntentosUsados = _gameService.Intentos,
+                    IntentosTotales = _gameInfo.Intentos
+                };
 
                 // Consultamos al servicio para saber por qué terminó
                 if (_gameService.Segundos <= 0)
                 {
+                    gameFinishedData.EsVictoria = false;
+                    _dbManager.Save(StorageKeys.Records, gameFinishedData);
                     MessageBox.Show("¡Game Over! Se acabó el tiempo.");
                     this.Close(); // Cerramos el formulario para volver al menú principal
                 }
@@ -127,10 +143,14 @@ namespace Memorama
                 {
                     if (_gameService.Intentos > _gameInfo.Intentos)
                     {
+                        gameFinishedData.EsVictoria = false;
+                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
                         this.Close();
                     }
                     else {
+                        gameFinishedData.EsVictoria = true;
+                        _dbManager.Save(StorageKeys.Records, gameFinishedData);
                         MessageBox.Show("¡Felicidades! Completaste el tablero.");
                         this.Close();
                     }
