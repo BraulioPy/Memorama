@@ -1,10 +1,10 @@
 # Memorama
 
-#Instrucciones del github:
+# Instrucciones del github:
 Pasos para hacer su rama
 
-#1- git checkout Develop
-#2- git pull
+# 1- git checkout Develop
+# 2- git pull
 #3- git checkout -b Task/Task_1
 //--- Una vez completada la actividad:
 #4- Agrego mensaje al commit
