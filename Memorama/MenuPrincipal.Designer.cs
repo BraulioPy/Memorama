@@ -28,47 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuPrincipal));
             this.tableroLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ayudaLabel = new MaterialSkin.Controls.MaterialLabel();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblcreditos = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableroLayoutPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableroLayoutPanel
             // 
+            this.tableroLayoutPanel.BackColor = System.Drawing.Color.Transparent;
             this.tableroLayoutPanel.ColumnCount = 1;
             this.tableroLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableroLayoutPanel.Controls.Add(this.ayudaLabel, 0, 0);
+            this.tableroLayoutPanel.Controls.Add(this.lblTitulo, 0, 1);
+            this.tableroLayoutPanel.Controls.Add(this.lblcreditos, 0, 2);
             this.tableroLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableroLayoutPanel.Location = new System.Drawing.Point(3, 64);
+            this.tableroLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.tableroLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.tableroLayoutPanel.Name = "tableroLayoutPanel";
-            this.tableroLayoutPanel.RowCount = 2;
+            this.tableroLayoutPanel.RowCount = 4;
+            this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.95542F));
             this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableroLayoutPanel.Size = new System.Drawing.Size(794, 383);
+            this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.3758F));
+            this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.66879F));
+            this.tableroLayoutPanel.Size = new System.Drawing.Size(676, 507);
             this.tableroLayoutPanel.TabIndex = 0;
             // 
-            // ayudaLabel
+            // lblTitulo
             // 
-            this.ayudaLabel.AutoSize = true;
-            this.ayudaLabel.Depth = 0;
-            this.ayudaLabel.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.ayudaLabel.Location = new System.Drawing.Point(3, 0);
-            this.ayudaLabel.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ayudaLabel.Name = "ayudaLabel";
-            this.ayudaLabel.Size = new System.Drawing.Size(45, 19);
-            this.ayudaLabel.TabIndex = 0;
-            this.ayudaLabel.Text = "Pares:";
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Engravers MT", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.lblTitulo.Location = new System.Drawing.Point(32, 181);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(611, 150);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "🌲 M E M O R A M A 🌲";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblcreditos
+            // 
+            this.lblcreditos.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblcreditos.AutoSize = true;
+            this.lblcreditos.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblcreditos.Location = new System.Drawing.Point(265, 331);
+            this.lblcreditos.Name = "lblcreditos";
+            this.lblcreditos.Size = new System.Drawing.Size(146, 22);
+            this.lblcreditos.TabIndex = 1;
+            this.lblcreditos.Text = "By Braulio y Yiyi";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.tableroLayoutPanel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(2, 52);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(676, 507);
+            this.panel1.TabIndex = 1;
             // 
             // MenuPrincipal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tableroLayoutPanel);
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(680, 561);
+            this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MenuPrincipal";
-            this.Text = "Memorama YiyiBraulio";
+            this.Padding = new System.Windows.Forms.Padding(2, 52, 2, 2);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tableroLayoutPanel.ResumeLayout(false);
             this.tableroLayoutPanel.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -76,6 +118,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableroLayoutPanel;
-        private MaterialSkin.Controls.MaterialLabel ayudaLabel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label lblcreditos;
     }
 }
