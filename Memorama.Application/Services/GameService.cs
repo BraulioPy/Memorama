@@ -81,10 +81,10 @@ namespace Memorama.Application.Services
             {
                 // Es la segunda carta, validamos match
                 int indiceSegunda = indice;
-                _partida.RegistrarIntento();
-
+                bool fallo = false;
                 if (_tablero.Cartas[_indicePrimerCarta].Valor == _tablero.Cartas[indiceSegunda].Valor)
                 {
+                    fallo = !fallo;
                     // ¡Son iguales!
                     _tablero.Cartas[_indicePrimerCarta].EsParejaEncontrada = true;
                     _tablero.Cartas[indiceSegunda].EsParejaEncontrada = true;
@@ -97,7 +97,6 @@ namespace Memorama.Application.Services
                 }
                 else
                 {
-
                     // No son iguales, bloquear y esperar para ocultar
                     _estaBloqueado = true;
                     await Task.Delay(800); // Reemplaza al Timer visual de 800ms
@@ -109,6 +108,7 @@ namespace Memorama.Application.Services
                     _estaBloqueado = false;
 
                 }
+                _partida.RegistrarIntento(fallo);
 
                 _indicePrimerCarta = -1;
             }
