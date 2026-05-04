@@ -25,9 +25,9 @@ namespace Memorama.Domain.Entities
             Reiniciar();
         }
 
-        public void RegistrarIntento()
+        public void RegistrarIntento(bool fallo)
         {
-            Intentos++;
+            if (!fallo) Intentos++;
         }
 
         public void RegistrarParejaEncontrada()
