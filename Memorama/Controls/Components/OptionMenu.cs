@@ -18,6 +18,7 @@ namespace Memorama.Controls
     public partial class OptionMenu : UserControl
     {
         public event Action<GameInfoModelView> ConsultarConfiguracionDePartida;
+        public event EventHandler OnHistorics;
         public OptionMenu()
         {
             InitializeComponent();
@@ -47,6 +48,23 @@ namespace Memorama.Controls
                 };
                 ButtonsMenuFlow.Controls.Add(botonWidget);
             }
+
+            //Aqui inician mis cambiosssssss
+
+            var buttonHistorics = new ButtonOption()
+            {
+                Titulo = "HISTÓRICOS",
+                ColorNivel = ColorTranslator.FromHtml("#B0BEC5")
+            };
+            
+            buttonHistorics.ConsultarConfiguracionBoton += (config) =>
+            {
+                OnHistorics?.Invoke(this, EventArgs.Empty);
+            };
+            ButtonsMenuFlow.Controls.Add(buttonHistorics);
+
+            //aqui terminannnnnnn 
+
             ButtonsMenuFlow.Padding = new Padding(0);
             ButtonsMenuFlow.Margin = new Padding(0);
 

@@ -81,7 +81,7 @@ namespace Memorama
             lblTitulo.AutoSize = true;
 
             lblTitulo.Location =new Point(
-                (panel1.Width-lblTitulo.Width)/2,35
+                (panel1.Width-lblTitulo.Width)/2,20
                 );
             lblTitulo.BringToFront();
 
