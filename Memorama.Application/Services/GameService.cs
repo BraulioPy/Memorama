@@ -97,6 +97,7 @@ namespace Memorama.Application.Services
                 }
                 else
                 {
+
                     // No son iguales, bloquear y esperar para ocultar
                     _estaBloqueado = true;
                     await Task.Delay(800); // Reemplaza al Timer visual de 800ms
@@ -106,6 +107,7 @@ namespace Memorama.Application.Services
 
                     OnParejaNoEncontrada?.Invoke(_indicePrimerCarta, indiceSegunda);
                     _estaBloqueado = false;
+
                 }
 
                 _indicePrimerCarta = -1;
