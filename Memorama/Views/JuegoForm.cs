@@ -37,7 +37,7 @@ namespace Memorama
             _dbManager = dbManager;
             _uiManager = new JuegoUIManager(this); // Creamos una instancia del gestor de UI, pasándole el formulario actual
             _motivationService = motivationService; // Guardamos la referencia al servicio de motivación
-            _notifyFrequence = (gameInfo.Segundos / 60) * 4;
+            _notifyFrequence = (gameInfo.Segundos / 60) * 3;
 
             //aqui ya empiezan los cambios que hice yo
 
@@ -76,10 +76,10 @@ namespace Memorama
                     PanelFondo.BackgroundImage,
                     new Rectangle(0, 0, panelTablero.Width, panelTablero.Height),
                     new Rectangle(
-                        loc.X *PanelFondo.BackgroundImage.Width/PanelFondo.Width,
-                        loc.Y*PanelFondo.BackgroundImage.Height/PanelFondo.Height,
-                        panelTablero.Width*PanelFondo.BackgroundImage.Width/PanelFondo.Width,
-                        panelTablero.Height*PanelFondo.BackgroundImage.Height/PanelFondo.Height),
+                        loc.X * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
+                        loc.Y * PanelFondo.BackgroundImage.Height / PanelFondo.Height,
+                        panelTablero.Width * PanelFondo.BackgroundImage.Width / PanelFondo.Width,
+                        panelTablero.Height * PanelFondo.BackgroundImage.Height / PanelFondo.Height),
                     GraphicsUnit.Pixel
                     );
             };
@@ -89,11 +89,11 @@ namespace Memorama
             {
                 panelTablero.Location = new Point(
                     (PanelFondo.Width - panelTablero.Width) / 2,
-                    (PanelFondo.Height-panelTablero.Height)/2+70);
+                    (PanelFondo.Height - panelTablero.Height) / 2 + 70);
 
                 button21.Location = new Point(
-                    panelTablero.Left+(panelTablero.Width-button21.Width)/2,
-                    panelTablero.Top-button21.Height-10
+                    panelTablero.Left + (panelTablero.Width - button21.Width) / 2,
+                    panelTablero.Top - button21.Height - 10
                     );
 
                 Font Tipografia = new Font("Segoe UI", 20, FontStyle.Bold);
@@ -105,8 +105,8 @@ namespace Memorama
 
                 label_Info.Location = new Point(20, 20);
                 label_tiempo.Location = new Point(20, 120);
-                Intentos.Location = new Point(20,75);
-                n_intentos.Location = new Point(Intentos.Right+10, 75);
+                Intentos.Location = new Point(20, 75);
+                n_intentos.Location = new Point(Intentos.Right + 10, 75);
             };
 
 
@@ -117,13 +117,20 @@ namespace Memorama
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Green800,Primary.Green900,Primary.Green500,Accent.Green400,TextShade.WHITE);
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Green800, Primary.Green900, Primary.Green500, Accent.Green400, TextShade.WHITE);
             ////Fin de Sintaxis basica para MaterialSkin.2
 
             // Suscribirnos a los eventos del servicio
             _gameService.OnCartaRevelada = (idx, val) => ActualizarBoton(idx, val);
-            _gameService.OnParejaEncontrada = (idx1, idx2) => MarcarPareja(idx1, idx2);
-            _gameService.OnParejaNoEncontrada = (idx1, idx2) => OcultarPareja(idx1, idx2);
+            _gameService.OnParejaEncontrada = (idx1, idx2) => {
+                _uiManager.MostrarAviso("¡Pareja encontrada!", 3);
+                MarcarPareja(idx1, idx2);
+            };
+            _gameService.OnParejaNoEncontrada = (idx1, idx2) => {
+                _uiManager.MostrarAviso("¡Inténtalo Nuevamente!", 3);
+                OcultarPareja(idx1, idx2);
+
+            };
             // En el constructor de JuegoForm.cs
             _gameService.OnPartidaFinalizada = () =>
             {
@@ -214,7 +221,7 @@ namespace Memorama
             {
                 _uiManager.MostrarAviso(_motivationService.GenerarMensajeFinal(
                     OnTimeGameInfo
-                    ), 2); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
+                    ), 6); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
             }
 
         }
