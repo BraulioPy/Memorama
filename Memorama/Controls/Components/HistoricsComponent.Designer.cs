@@ -28,72 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelSuperior = new System.Windows.Forms.Panel();
-            this.buttonRegresar = new System.Windows.Forms.Button();
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.dgvHistoricos = new System.Windows.Forms.DataGridView();
-            this.panelSuperior.SuspendLayout();
+            this.buttonRegresar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricos)).BeginInit();
             this.SuspendLayout();
             // 
-            // panelSuperior
+            // dgvHistoricos
             // 
-            this.panelSuperior.Controls.Add(this.lblTitulo);
-            this.panelSuperior.Controls.Add(this.buttonRegresar);
-            this.panelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSuperior.Location = new System.Drawing.Point(0, 0);
-            this.panelSuperior.Name = "panelSuperior";
-            this.panelSuperior.Size = new System.Drawing.Size(304, 74);
-            this.panelSuperior.TabIndex = 0;
+            this.dgvHistoricos.AllowUserToResizeColumns = false;
+            this.dgvHistoricos.AllowUserToResizeRows = false;
+            this.dgvHistoricos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvHistoricos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvHistoricos.Location = new System.Drawing.Point(0, 0);
+            this.dgvHistoricos.Name = "dgvHistoricos";
+            this.dgvHistoricos.ReadOnly = true;
+            this.dgvHistoricos.RowHeadersVisible = false;
+            this.dgvHistoricos.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvHistoricos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvHistoricos.Size = new System.Drawing.Size(304, 395);
+            this.dgvHistoricos.TabIndex = 1;
             // 
             // buttonRegresar
             // 
-            this.buttonRegresar.Location = new System.Drawing.Point(3, 48);
+            this.buttonRegresar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonRegresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRegresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonRegresar.Location = new System.Drawing.Point(115, 186);
             this.buttonRegresar.Name = "buttonRegresar";
             this.buttonRegresar.Size = new System.Drawing.Size(75, 23);
-            this.buttonRegresar.TabIndex = 0;
+            this.buttonRegresar.TabIndex = 2;
             this.buttonRegresar.Text = "← Regresar";
+            this.buttonRegresar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonRegresar.UseVisualStyleBackColor = true;
             this.buttonRegresar.Click += new System.EventHandler(this.buttonRegresar_Click);
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Location = new System.Drawing.Point(116, 22);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(56, 13);
-            this.lblTitulo.TabIndex = 1;
-            this.lblTitulo.Text = "Historicos:";
-            // 
-            // dgvHistoricos
-            // 
-            this.dgvHistoricos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvHistoricos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvHistoricos.Location = new System.Drawing.Point(0, 74);
-            this.dgvHistoricos.Name = "dgvHistoricos";
-            this.dgvHistoricos.Size = new System.Drawing.Size(304, 321);
-            this.dgvHistoricos.TabIndex = 1;
             // 
             // HistoricsComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonRegresar);
             this.Controls.Add(this.dgvHistoricos);
-            this.Controls.Add(this.panelSuperior);
             this.Name = "HistoricsComponent";
             this.Size = new System.Drawing.Size(304, 395);
-            this.panelSuperior.ResumeLayout(false);
-            this.panelSuperior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoricos)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panelSuperior;
-        private System.Windows.Forms.Label lblTitulo;
-        private System.Windows.Forms.Button buttonRegresar;
         private System.Windows.Forms.DataGridView dgvHistoricos;
+        private System.Windows.Forms.Button buttonRegresar;
     }
 }

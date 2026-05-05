@@ -11,6 +11,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using Memorama.Application.Interfaces;
 using Memorama.Controls;
+using Memorama.Controls.Components;
 using Memorama.Domain.ValueObjects;
 
 namespace Memorama
@@ -37,7 +38,31 @@ namespace Memorama
 
             var _MenuBotones = new OptionMenu();
 
+            //creamos el componente de Historics una vez al inicio
+            var _Historics = new HistoricsComponent();
+            _Historics.Dock = DockStyle.Fill;
+            _Historics.Visible = false;
+
             _MenuBotones.Dock = DockStyle.Fill; // <--- aqui hacemos que se llene con el ancho dispoible
+
+            //Primero evaluamos, ¿El usuario presionó Historicos?
+            _MenuBotones.OnHistorics += (s, ev) =>
+            {
+                lblcreditos.Hide();
+                _MenuBotones.Hide();
+                _Historics.Show();
+                _Historics.BringToFront();
+            };
+
+            _Historics.OnRegresar += (s, e) =>
+            {
+                lblcreditos.Show();
+                _MenuBotones.Show();
+                _Historics.Hide();
+            };
+            tableroLayoutPanel.Controls.Add(_Historics, 0, 3);
+
+            //Si el usuario no presionó la opcion de ver los historicos, entonces la ejecucion sigue normal
 
             List<MenuButtonModelView> BotonesDisponibles = new List<MenuButtonModelView> {
                 new MenuButtonModelView{_ModoDeJuego = "FÁCIL", _CartasTotales = 16,_Segundos = 180, ColorHex = "#D5EDDF" }, //Verde muuuuy clarito
