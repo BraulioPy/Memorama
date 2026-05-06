@@ -1,4 +1,12 @@
-﻿using System;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using Memorama.Application.Constants;
+using Memorama.Application.DTOs.Records;
+using Memorama.Application.Interfaces;
+using Memorama.Controls;
+using Memorama.Controls.Components;
+using Memorama.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,12 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
-using Memorama.Application.Interfaces;
-using Memorama.Controls;
-using Memorama.Controls.Components;
-using Memorama.Domain.ValueObjects;
 
 namespace Memorama
 {
@@ -28,6 +30,7 @@ namespace Memorama
             _gameService = gameService; //Lo uso para luego mandarle la inyección del servicio al form que invoque jaja
             _dbManager = dbManager;
             _motivatioService = motivationService;
+            List<GameRecordDTO> Top5Record = _motivatioService.ConsultarHistoricos(5);
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -39,7 +42,7 @@ namespace Memorama
             var _MenuBotones = new OptionMenu();
 
             //creamos el componente de Historics una vez al inicio
-            var _Historics = new HistoricsComponent();
+            var _Historics = new HistoricsComponent(Top5Record);
             _Historics.Dock = DockStyle.Fill;
             _Historics.Visible = false;
 

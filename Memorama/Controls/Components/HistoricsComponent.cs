@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Memorama.Application.DTOs.Records;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,7 @@ namespace Memorama.Controls.Components
         private Panel panelContenedor;
         private Panel panelCristal;
 
-        public HistoricsComponent()
+        public HistoricsComponent(List<GameRecordDTO> Top5RecordData)
         {
             InitializeComponent();
             //Configuracion en el diseño del HistoricsComponent
@@ -28,7 +29,7 @@ namespace Memorama.Controls.Components
             ConfigurarTabla();
             ConfigurarBoton();
             //Funcion que muestra los datos de prueba en el DataGridView
-            CargarDatosPrueba();
+            CargarDatosPrueba(Top5RecordData);
         }
 
         private void ConfigurarEstiloBase()
@@ -170,17 +171,35 @@ namespace Memorama.Controls.Components
             OnRegresar?.Invoke(this, EventArgs.Empty);
         }
 
-        private void CargarDatosPrueba()
+        private void CargarDatosPrueba(List<GameRecordDTO> Top5RecordData)
         {
             dgvHistoricos.Columns.Clear();
             dgvHistoricos.Columns.Add("Fecha", "Fecha");
             dgvHistoricos.Columns.Add("Dificultad", "Dificultad");
             dgvHistoricos.Columns.Add("Tiempo", "Tiempo");
             dgvHistoricos.Columns.Add("Intentos", "Intentos");
-
-            dgvHistoricos.Rows.Add("03/05/2026", "Facil", "45s", "12");
-            dgvHistoricos.Rows.Add("02/05/2026", "Intermedio", "89s", "24");
-            dgvHistoricos.Rows.Add("03/05/2026", "Dificil", "75s", "30");
+            if(Top5RecordData != null)
+            {
+                Top5RecordData.ForEach(data =>
+                {
+                    dgvHistoricos.Rows.Add(
+                        data.FechaDeJuego.ToString(),
+                        data.ModoDeJuego,
+                        (data.SegundosUsados / 60) + "min" + "-" + (data.SegundosUsados - (data.SegundosUsados / 60) * 60) + "s" + "/" + (data.SegundosTotales / 60) + "min" + "-" + (data.SegundosTotales - (data.SegundosTotales / 60) * 60) + "s",
+                        data.IntentosUsados + "/" + data.IntentosTotales);
+                });
+            }
+            else
+            {
+                dgvHistoricos.Rows.Add(
+                    "No",
+                    "Hay",
+                    "Datos",
+                    "Disponibles"
+                    );
+            }
         }
+
+
     }
 }
