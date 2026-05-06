@@ -22,7 +22,7 @@ namespace Memorama.Application.Services
         public List<GameRecordDTO> ConsultarHistoricos(int CantidadHistoricos)
         {
             var RecordsList = _dbManager.Load<List<GameRecordDTO>>(StorageKeys.Records);
-            return RecordsList?.OrderByDescending(x=>x.CartasTotales)
+            return RecordsList?.Where(x=>x.EsVictoria).OrderByDescending(x=>x.CartasTotales)
                 .ThenBy(x => x.IntentosUsados)
                 .ThenBy(x => x.SegundosUsados)
                 .Take(CantidadHistoricos).ToList() ?? new List<GameRecordDTO>();

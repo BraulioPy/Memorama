@@ -1,4 +1,12 @@
-﻿using System;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using Memorama.Application.Constants;
+using Memorama.Application.DTOs.Records;
+using Memorama.Application.Interfaces;
+using Memorama.Controls;
+using Memorama.Controls.Components;
+using Memorama.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,11 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
-using Memorama.Application.Interfaces;
-using Memorama.Controls;
-using Memorama.Domain.ValueObjects;
 
 namespace Memorama
 {
@@ -27,6 +30,7 @@ namespace Memorama
             _gameService = gameService; //Lo uso para luego mandarle la inyección del servicio al form que invoque jaja
             _dbManager = dbManager;
             _motivatioService = motivationService;
+            List<GameRecordDTO> Top5Record = _motivatioService.ConsultarHistoricos(5);
 
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
@@ -37,7 +41,31 @@ namespace Memorama
 
             var _MenuBotones = new OptionMenu();
 
+            //creamos el componente de Historics una vez al inicio
+            var _Historics = new HistoricsComponent(Top5Record);
+            _Historics.Dock = DockStyle.Fill;
+            _Historics.Visible = false;
+
             _MenuBotones.Dock = DockStyle.Fill; // <--- aqui hacemos que se llene con el ancho dispoible
+
+            //Primero evaluamos, ¿El usuario presionó Historicos?
+            _MenuBotones.OnHistorics += (s, ev) =>
+            {
+                lblcreditos.Hide();
+                _MenuBotones.Hide();
+                _Historics.Show();
+                _Historics.BringToFront();
+            };
+
+            _Historics.OnRegresar += (s, e) =>
+            {
+                lblcreditos.Show();
+                _MenuBotones.Show();
+                _Historics.Hide();
+            };
+            tableroLayoutPanel.Controls.Add(_Historics, 0, 3);
+
+            //Si el usuario no presionó la opcion de ver los historicos, entonces la ejecucion sigue normal
 
             List<MenuButtonModelView> BotonesDisponibles = new List<MenuButtonModelView> {
                 new MenuButtonModelView{_ModoDeJuego = "FÁCIL", _CartasTotales = 16,_Segundos = 180, ColorHex = "#D5EDDF" }, //Verde muuuuy clarito
@@ -81,7 +109,7 @@ namespace Memorama
             lblTitulo.AutoSize = true;
 
             lblTitulo.Location =new Point(
-                (panel1.Width-lblTitulo.Width)/2,35
+                (panel1.Width-lblTitulo.Width)/2,20
                 );
             lblTitulo.BringToFront();
 
