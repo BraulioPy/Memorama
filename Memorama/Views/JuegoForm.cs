@@ -17,6 +17,7 @@ using Memorama.Application.Constants;
 using Memorama.Application.DTOs.Records;
 using System.Drawing.Text;
 using Memorama.Application.DTOs.OnTime;
+using Memorama.Controls.Components;
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
@@ -161,7 +162,8 @@ namespace Memorama
                         MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
                         this.Close();
                     }
-                    else {
+                    else
+                    {
                         gameFinishedData.EsVictoria = true;
                         MessageBox.Show("¡Felicidades! Completaste el tablero.");
                         this.Close();
@@ -185,7 +187,7 @@ namespace Memorama
             int columnas = (_gameInfo.CartasTotales == 16) ? 4 : (_gameInfo.CartasTotales == 32) ? 8 : (_gameInfo.CartasTotales == 50) ? 10 : 4;
             //es para calcular automaticamente las columnas para una cuadricula mas cuadrada
 
-            panelTablero.Width = columnas * (btnSize + espaciado*2) + espaciado*2;
+            panelTablero.Width = columnas * (btnSize + espaciado * 2) + espaciado * 2;
             //ajusta el ancho del tablero para que quepan exctamente las columnas
 
             panelTablero.Left = (PanelFondo.Width - panelTablero.Width) / 2;
@@ -209,9 +211,10 @@ namespace Memorama
         private void timer_partida_Tick_1(object sender, EventArgs e)
         {
             _gameService.AvanzarTiempo();
-            label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos/60)*60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
+            label_tiempo.Text = _gameService.Segundos >= 60 ? ("Tiempo Restante: " + (_gameService.Segundos / 60) + "min" + "-" + (_gameService.Segundos - (_gameService.Segundos / 60) * 60) + "s") : "Tiempo Restante: " + (_gameService.Segundos + "s");
             n_intentos.Text = _gameService.Intentos.ToString() + " [ " + _gameInfo.Intentos.ToString() + " max. ]";
-            OnTimeGameDataInfoDTO OnTimeGameInfo = new OnTimeGameDataInfoDTO() { 
+            OnTimeGameDataInfoDTO OnTimeGameInfo = new OnTimeGameDataInfoDTO()
+            {
                 ModoDeJuego = _gameInfo.ModoDeJuego,
                 CartasTotales = _gameInfo.CartasTotales,
                 IntentosActuales = _gameService.Intentos,
