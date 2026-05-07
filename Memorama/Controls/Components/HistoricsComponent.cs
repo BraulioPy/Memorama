@@ -30,6 +30,9 @@ namespace Memorama.Controls.Components
             ConfigurarBoton();
             //Funcion que muestra los datos de prueba en el DataGridView
             CargarDatosPrueba(Top5RecordData);
+
+            this.Invalidate();
+            this.Update();
         }
 
         private void ConfigurarEstiloBase()
@@ -37,6 +40,11 @@ namespace Memorama.Controls.Components
             this.BackColor = Color.Transparent;
             this.Dock = DockStyle.Fill;
             this.DoubleBuffered = true;
+
+            //Esto esta forzando los estilos de transaprencia
+            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            this.SetStyle(ControlStyles.Opaque, false);
+            this.UpdateStyles();
         }
 
         private void ConfigurarPaneles()
@@ -58,8 +66,11 @@ namespace Memorama.Controls.Components
                 Parent = panelContenedor,
                 Width = panelContenedor.Width,
                 Height = panelContenedor.Height,
-                BackColor = Color.FromArgb(180, 255, 255, 255)
+                BackColor = Color.Transparent
             };
+
+            panelCristal.Paint += DibujarEfectoCristal;
+            this.Controls.Add(panelContenedor);
 
             panelCristal.Paint += DibujarEfectoCristal;
             this.Controls.Add(panelContenedor);
@@ -71,7 +82,8 @@ namespace Memorama.Controls.Components
             using (GraphicsPath path = new GraphicsPath())
             {
                 int radio = 30;
-                Rectangle rect = new Rectangle(0, 0, panelCristal.Width - 1, panelCristal.Height - 1);
+                float grosor=4f;
+                RectangleF rect = new RectangleF(grosor / 2, grosor / 2, panelCristal.Width - grosor, panelCristal.Height - grosor);
                 path.AddArc(rect.X, rect.Y, radio, radio, 180, 90);
                 path.AddArc(rect.X + rect.Width - radio, rect.Y, radio, radio, 270, 90);
                 path.AddArc(rect.X + rect.Width - radio, rect.Y + rect.Height - radio, radio, radio, 0, 90);
@@ -81,7 +93,7 @@ namespace Memorama.Controls.Components
                 using (SolidBrush brush = new SolidBrush(Color.FromArgb(180, 245, 255, 250)))
                     e.Graphics.FillPath(brush, path);
 
-                using (Pen pen = new Pen(Color.FromArgb(200, 27, 94, 32), 4))
+                using (Pen pen = new Pen(Color.FromArgb(200, 27, 94, 32), grosor))
                     e.Graphics.DrawPath(pen, path);
             }
         }
@@ -96,7 +108,7 @@ namespace Memorama.Controls.Components
                 ForeColor = Color.Black,
                 BackColor = Color.Transparent,
                 AutoSize = true,
-                Top = 20
+                Top = 15
             };
             lblTituloHistoricos.Left = (panelCristal.Width - lblTituloHistoricos.Width) / 2;
         }
@@ -145,18 +157,28 @@ namespace Memorama.Controls.Components
             if (buttonRegresar == null) return;
 
             buttonRegresar.Parent = panelCristal;
-            buttonRegresar.Width = 180;
-            buttonRegresar.Height = 40;
+            buttonRegresar.Width = 160;
+            buttonRegresar.Height = 35;
 
             // Botón arriba para dar espacio a la tabla grande
             buttonRegresar.Top = dgvHistoricos.Bottom + 5;
             buttonRegresar.Left = (panelCristal.Width - buttonRegresar.Width) / 2;
 
+            buttonRegresar.Padding = new Padding(0);
+            buttonRegresar.Margin = new Padding(0);
+            buttonRegresar.TextAlign = ContentAlignment.MiddleCenter;
+
+            buttonRegresar.TextImageRelation = TextImageRelation.Overlay;
+
             buttonRegresar.BackColor = Color.FromArgb(27, 94, 32);
             buttonRegresar.ForeColor = Color.White;
             buttonRegresar.FlatStyle = FlatStyle.Flat;
+            buttonRegresar.FlatAppearance.BorderSize = 0;
             buttonRegresar.Font = new Font("Bahnschrift", 11, FontStyle.Bold);
-            buttonRegresar.Text = "← Regresar";
+            buttonRegresar.Text = "← Regresar            \n\n";
+            buttonRegresar.ImageAlign = ContentAlignment.MiddleCenter;
+
+            buttonRegresar.TextAlign = ContentAlignment.MiddleCenter;
 
             GraphicsPath buttonPath = new GraphicsPath();
             buttonPath.AddArc(0, 0, 20, 20, 180, 90);
@@ -199,7 +221,5 @@ namespace Memorama.Controls.Components
                     );
             }
         }
-
-
     }
 }
