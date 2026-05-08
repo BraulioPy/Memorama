@@ -1,5 +1,6 @@
 ﻿using Memorama.Application.Interfaces;
 using Memorama.Domain.Entities;
+using Memorama.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Memorama.Application.Services
     {
         private Tablero _tablero;
         private Partida _partida;
+        private readonly IIconService _iconService; // Servicio de Iconos
         private int _indicePrimerCarta = -1;
         private bool _estaBloqueado = false;
 
@@ -21,16 +23,24 @@ namespace Memorama.Application.Services
         public bool EstaBloqueado => _estaBloqueado;
 
         // Acciones para avisar a la UI
-        public System.Action<int, int> OnCartaRevelada { get; set; }
+        public System.Action<int, string> OnCartaRevelada { get; set; }
         public System.Action<int, int> OnParejaEncontrada { get; set; }
         public System.Action<int, int> OnParejaNoEncontrada { get; set; }
         public System.Action OnPartidaFinalizada { get; set; }
 
-        public void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos)
+        public GameService(IIconService iconService)
+        {
+            _iconService = iconService;
+        }
+        public void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos, CategoriaIcono tema)
         {
             _tablero = new Tablero();
+
+            // 1. Pedimos los iconos al azar según la dificultad (la mitad del total de cartas)
+            var iconosSeleccionados = _iconService.ObtenerNombresDeIconos(totalCartas / 2, tema);
+
             _partida = new Partida(totalCartas/2, _segundosTotales, _intentosMaximos); // 10 parejas por defecto
-            _tablero.GenerarCartas(totalCartas);
+            _tablero.GenerarCartas(iconosSeleccionados);
             _tablero.Mezclar();
             _partida.Reiniciar();
             _indicePrimerCarta = -1;
@@ -70,7 +80,7 @@ namespace Memorama.Application.Services
 
             // 1. Revelar la carta
             carta.EstaVolteada = true;
-            OnCartaRevelada?.Invoke(indice, carta.Valor);
+            OnCartaRevelada?.Invoke(indice, _tablero.Cartas[indice].Contenido);
 
             if (_indicePrimerCarta == -1)
             {
@@ -82,7 +92,7 @@ namespace Memorama.Application.Services
                 // Es la segunda carta, validamos match
                 int indiceSegunda = indice;
                 bool fallo = false;
-                if (_tablero.Cartas[_indicePrimerCarta].Valor == _tablero.Cartas[indiceSegunda].Valor)
+                if (_tablero.Cartas[_indicePrimerCarta].Contenido == _tablero.Cartas[indiceSegunda].Contenido)
                 {
                     fallo = !fallo;
                     // ¡Son iguales!

@@ -5,6 +5,7 @@ using Memorama.Application.DTOs.Records;
 using Memorama.Application.Interfaces;
 using Memorama.Controls;
 using Memorama.Controls.Components;
+using Memorama.Domain.Enums;
 using Memorama.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,8 @@ namespace Memorama
             _MenuBotones.SetConfiguracion(BotonesDisponibles);
             _MenuBotones.ConsultarConfiguracionDePartida += (config) =>
             {
+                config.Tema = CategoriaIcono.Maps; //EJEMPLO DE COMO CAMBIAR EL TEMA
+
                 JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
                 TableroJuego.FormClosed += (s, arg) =>{
                     MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);

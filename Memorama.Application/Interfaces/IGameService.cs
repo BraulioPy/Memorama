@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Memorama.Domain.Entities;
+using Memorama.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Memorama.Domain.Entities;
 
 namespace Memorama.Application.Interfaces
 {
@@ -15,13 +16,13 @@ namespace Memorama.Application.Interfaces
         bool EstaBloqueado { get; }
 
         // Métodos de control
-        void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos);
+        void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos, CategoriaIcono tema);
         void SeleccionarCarta(int indice);
         void AvanzarTiempo();
 
         // Eventos para avisar a la UI que algo cambió sin que el servicio conozca el Form
         // Esto es clave para el desacoplamiento
-        System.Action<int, int> OnCartaRevelada { get; set; } // índice, valor
+        System.Action<int, string> OnCartaRevelada { get; set; } // índice, valor
         System.Action<int, int> OnParejaEncontrada { get; set; } // índice1, índice2
         System.Action<int, int> OnParejaNoEncontrada { get; set; } // índice1, índice2
         System.Action OnPartidaFinalizada { get; set; }

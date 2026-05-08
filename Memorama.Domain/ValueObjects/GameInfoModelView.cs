@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Memorama.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,5 +32,6 @@ namespace Memorama.Domain.ValueObjects
         public int Segundos { get; set; }
         public string ModoDeJuego { get; set; }
         public string ColorHex { get; set; }
+        public CategoriaIcono Tema { get; set; } = CategoriaIcono.Todos;
     }
 }
