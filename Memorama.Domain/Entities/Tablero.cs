@@ -16,14 +16,15 @@ namespace Memorama.Domain.Entities
         }
 
         // Esta lógica reemplaza el llenado del arreglo 'valor' que teníamos en Form1
-        public void GenerarCartas(int totalCartas)
+        public void GenerarCartas(List<string> iconos)
         {
             Cartas.Clear();
-            for (int i = 0; i < totalCartas; i++)
+            List<string> listaDuplicada = iconos.Concat(iconos).ToList();
+            for (int i = 0; i < listaDuplicada.Count; i++)
             {
                 // (i / 2) + 1 genera los pares: 1,1, 2,2, 3,3...
                 int valorCarta = (i / 2) + 1;
-                Cartas.Add(new Carta(i, valorCarta));
+                Cartas.Add(new Carta(i, listaDuplicada[i]));
             }
         }
 

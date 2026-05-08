@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace Memorama.Controls
 {
@@ -14,8 +16,11 @@ namespace Memorama.Controls
         private Timer _timer = new Timer();//este reloj controla la animacion
         private int _animacioncont = 0;//contador de pasos de la animacion
         private bool _shake = false;//ese señala que animacion hacer
-       
+
         // Propiedad para vincular el botón físico con el objeto 'Carta' del Domain
+        private static PrivateFontCollection _fontCollection = new PrivateFontCollection();
+        private static Font _iconFont;
+
         public int Indice { get; private set; }
 
         public MemoryButton(int indice)
@@ -27,11 +32,35 @@ namespace Memorama.Controls
             this.FlatAppearance.BorderSize = 0;
             this.Font = new Font("Bahnschrift", 16, FontStyle.Bold);
             this.Text = ""; // Empieza oculto
+            CargarFuenteMaterial();
+        }
+        private void CargarFuenteMaterial()
+        {
+            if (_iconFont != null) return; // Ya está cargada
+
+            try
+            {
+                // Buscamos en la carpeta 'Resources' dentro de donde se ejecuta el .exe
+                string pathFuente = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "MaterialSymbols_28.ttf");
+
+                if (File.Exists(pathFuente))
+                {
+                    _fontCollection.AddFontFile(pathFuente);
+                    _iconFont = new Font(_fontCollection.Families[0], 24f);
+                }
+                else
+                {
+                    // Si no existe, usamos una por defecto para no romper el programa
+                    _iconFont = new Font("Segoe UI Symbol", 24f);
+                }
+            }
+            catch { _iconFont = new Font("Arial", 24f); }
         }
 
-        public void Revelar(int valor)
+        public void Revelar(string nombreIcono)
         {
-            this.Text = valor.ToString();
+            this.Font = _iconFont;
+            this.Text = nombreIcono; // Aquí Google Font dibujará el icono
             this.BackColor = Color.White;
             this.ForeColor = Color.Black;
         }

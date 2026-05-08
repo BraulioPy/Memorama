@@ -21,7 +21,7 @@ namespace Memorama.Application.Interfaces
 
         // Eventos para avisar a la UI que algo cambió sin que el servicio conozca el Form
         // Esto es clave para el desacoplamiento
-        System.Action<int, int> OnCartaRevelada { get; set; } // índice, valor
+        System.Action<int, string> OnCartaRevelada { get; set; } // índice, valor
         System.Action<int, int> OnParejaEncontrada { get; set; } // índice1, índice2
         System.Action<int, int> OnParejaNoEncontrada { get; set; } // índice1, índice2
         System.Action OnPartidaFinalizada { get; set; }

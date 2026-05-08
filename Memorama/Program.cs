@@ -24,7 +24,9 @@ namespace Memorama
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
-            IGameService gameService = new GameService();
+            // 1. Creamos el proveedor de iconos real (Infrastructure)
+            IIconService iconProvider = new IconService();
+            IGameService gameService = new GameService(iconProvider);
             IPersistenceService dbManager = new PersistenceService();
             IMotivationService motivationService = new MotivationService(dbManager);
 
