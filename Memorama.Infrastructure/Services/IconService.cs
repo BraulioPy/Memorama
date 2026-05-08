@@ -1,4 +1,5 @@
 ﻿using Memorama.Application.Interfaces;
+using Memorama.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Memorama.Infrastructure.Services
 {
     public class IconService : IIconService
     {
-        public List<string> ObtenerNombresDeIconos(int cantidad)
+        public List<string> ObtenerNombresDeIconos(int cantidad, CategoriaIcono categoria = CategoriaIcono.Todos)
         {
             var assembly = Assembly.GetExecutingAssembly();
             // AJUSTA ESTO: NombreProyecto.Carpeta.Archivo
@@ -27,15 +28,37 @@ namespace Memorama.Infrastructure.Services
 
                 using (JsonDocument doc = JsonDocument.Parse(jsonLimpio))
                 {
-                    var icons = doc.RootElement.GetProperty("icons");
-                    var todosLosNombres = icons.EnumerateArray()
+                    var icons = doc.RootElement.GetProperty("icons").EnumerateArray();
+                    IEnumerable<JsonElement> iconosFiltrados;
+
+                    if (categoria != CategoriaIcono.Todos)
+                    {
+                        // Pasamos el Enum a string minúscula (ej: Maps -> "maps") para comparar con el JSON
+                        string nombreCatBuscada = categoria.ToString().ToLower();
+
+                        // Filtramos los iconos cuya lista de "categories" contenga la que buscamos
+                        iconosFiltrados = icons.Where(icon =>
+                            icon.GetProperty("categories").EnumerateArray()
+                            .Any(c => c.GetString() == nombreCatBuscada)
+                        );
+                    }
+                    else
+                    {
+                        // Si es "Todos", no filtramos nada
+                        iconosFiltrados = icons;
+                    }
+
+                    // Ahora sí, de esos que quedaron, extraemos solo el string del "name"
+                    var listaNombres = iconosFiltrados
                         .Select(icon => icon.GetProperty("name").GetString())
                         .ToList();
 
+                    // Mezclamos y devolvemos la cantidad pedida
                     Random rnd = new Random();
-                    return todosLosNombres.OrderBy(x => rnd.Next()).Take(cantidad).ToList();
+                    return listaNombres.OrderBy(x => rnd.Next()).Take(cantidad).ToList();
                 }
             }
+
         }
     }
 }

@@ -176,7 +176,7 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
-            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos);
+            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos, _gameInfo.Tema);
 
             //YIYI cambios
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Memorama.Domain.Entities;
+using Memorama.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Memorama.Domain.Entities;
 
 namespace Memorama.Application.Interfaces
 {
@@ -15,7 +16,7 @@ namespace Memorama.Application.Interfaces
         bool EstaBloqueado { get; }
 
         // Métodos de control
-        void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos);
+        void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos, CategoriaIcono tema);
         void SeleccionarCarta(int indice);
         void AvanzarTiempo();
 

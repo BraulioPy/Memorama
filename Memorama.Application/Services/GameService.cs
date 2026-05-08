@@ -1,5 +1,6 @@
 ﻿using Memorama.Application.Interfaces;
 using Memorama.Domain.Entities;
+using Memorama.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +32,12 @@ namespace Memorama.Application.Services
         {
             _iconService = iconService;
         }
-        public void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos)
+        public void IniciarNuevaPartida(int totalCartas, int _segundosTotales, int _intentosMaximos, CategoriaIcono tema)
         {
             _tablero = new Tablero();
 
             // 1. Pedimos los iconos al azar según la dificultad (la mitad del total de cartas)
-            var iconosSeleccionados = _iconService.ObtenerNombresDeIconos(totalCartas / 2);
+            var iconosSeleccionados = _iconService.ObtenerNombresDeIconos(totalCartas / 2, tema);
 
             _partida = new Partida(totalCartas/2, _segundosTotales, _intentosMaximos); // 10 parejas por defecto
             _tablero.GenerarCartas(iconosSeleccionados);
