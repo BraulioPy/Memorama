@@ -5,6 +5,7 @@ using Memorama.Application.DTOs.Records;
 using Memorama.Application.Interfaces;
 using Memorama.Controls;
 using Memorama.Controls.Components;
+using Memorama.Domain.Enums;
 using Memorama.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,7 @@ namespace Memorama
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(500);
+                config.Tema = CategoriaIcono.Maps; //EJEMPLO DE COMO CAMBIAR EL TEMA
 
                 JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
                 TableroJuego.FormClosed += (sender2, arg) =>

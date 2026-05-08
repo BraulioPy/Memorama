@@ -9,14 +9,14 @@ namespace Memorama.Domain.Entities
     public class Carta
     {
         public int Id { get; set; }
-        public int Valor { get; set; } // El número (1-10) que debe coincidir (si queremos poner un simbolo modificamos esto)
+        public string Contenido { get; set; } // Antes era int Valor
         public bool EstaVolteada { get; set; }
         public bool EsParejaEncontrada { get; set; }
 
-        public Carta(int id, int valor)
+        public Carta(int id, string contenido)
         {
             Id = id;
-            Valor = valor;
+            Contenido = contenido;
             EstaVolteada = false;
             EsParejaEncontrada = false;
         }

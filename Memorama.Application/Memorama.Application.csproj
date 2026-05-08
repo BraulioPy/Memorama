@@ -45,6 +45,7 @@
     <Compile Include="DTOs\OnTime\OnTimeGameDataInfoDTO.cs" />
     <Compile Include="DTOs\Records\GameRecordDTO.cs" />
     <Compile Include="Interfaces\IGameService.cs" />
+    <Compile Include="Interfaces\IIconService.cs" />
     <Compile Include="Interfaces\IMotivationService.cs" />
     <Compile Include="Interfaces\IPersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

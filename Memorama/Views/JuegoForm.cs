@@ -122,7 +122,7 @@ namespace Memorama
             ////Fin de Sintaxis basica para MaterialSkin.2
 
             // Suscribirnos a los eventos del servicio
-            _gameService.OnCartaRevelada = (idx, val) => ActualizarBoton(idx, val);
+            _gameService.OnCartaRevelada = (idx, contenido) => ActualizarBoton(idx, contenido);
             _gameService.OnParejaEncontrada = (idx1, idx2) => {
                 _uiManager.MostrarAviso("¡Pareja encontrada!", 3);
                 MarcarPareja(idx1, idx2);
@@ -178,7 +178,7 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
-            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos);
+            _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos, _gameInfo.Tema);
 
             //YIYI cambios
 
@@ -230,10 +230,10 @@ namespace Memorama
         }
 
         // Métodos de ayuda para la UI
-        private void ActualizarBoton(int indice, int valor)
+        private void ActualizarBoton(int indice, string contenido)
         {
             var btn = (MemoryButton)panelTablero.Controls[indice];
-            btn.Revelar(valor);
+            btn.Revelar(contenido);
         }
 
         private void MarcarPareja(int idx1, int idx2)
