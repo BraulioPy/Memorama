@@ -58,7 +58,7 @@
             this.buttonRegresar.Size = new System.Drawing.Size(75, 23);
             this.buttonRegresar.TabIndex = 2;
             this.buttonRegresar.Text = "← Regresar";
-            this.buttonRegresar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRegresar.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.buttonRegresar.UseVisualStyleBackColor = true;
             this.buttonRegresar.Click += new System.EventHandler(this.buttonRegresar_Click);
             // 
