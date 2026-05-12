@@ -1,6 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using Memorama.Application.Constants;
+using Memorama.Application.DTOs;
 using Memorama.Application.DTOs.Records;
 using Memorama.Application.Interfaces;
 using Memorama.Controls;
@@ -76,6 +77,7 @@ namespace Memorama
             SendMessage(Handle, WM_SETREDRAW, false, 0);
 
             await Task.Delay(2000);
+
             List<GameRecordDTO> Top5Record = _motivatioService.ConsultarHistoricos(5);
 
             // Inicializar componentes
@@ -83,6 +85,19 @@ namespace Memorama
             //creamos el componente de Historics una vez al inicio
             var _Historics = new HistoricsComponent(Top5Record);
 
+            var selector = new ThemeSelectorComponent();
+
+            selector.Visible = false;
+            this.Controls.Add(selector);
+            
+            selector.Location = new Point((this.Width - selector.Width) / 2, (this.Height - selector.Height) / 2);
+            selector.BringToFront();
+
+            _Historics.Dock = DockStyle.Fill;
+            _Historics.Visible = false;
+            _MenuBotones.Dock = DockStyle.Fill;// <--- aqui hacemos que se llene con el ancho dispoible
+
+            
             ConfigurarEventos(_MenuBotones, _Historics);
             ConfigurarLayoutVisual(_MenuBotones, _Historics);
 
@@ -139,19 +154,37 @@ namespace Memorama
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(500);
-                config.Tema = CategoriaIcono.Maps; //EJEMPLO DE COMO CAMBIAR EL TEMA
 
-                JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
-                TableroJuego.FormClosed += (sender2, arg) =>
+                List<string> Temas = new List<string> { "Action", "Alert", "Av", "Communication", "Content", "Device", "Editor", "File", "Hardware", "Home", "Image", "Maps","Navigation","Notification","Places","Social"};
+                selector.ConfigurarTemas(Temas);
+
+                _loading.Visible = false;
+
+                selector.Visible = true;
+                selector.BringToFront();
+
+                selector.OnTemaSeleccionado += async (temaElegido) =>
                 {
-                    MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
-                    Program.contexto.MainForm = nuevoMenu;
-                    nuevoMenu.Show();
+                    selector.Visible = false;
+                    
+                    _loading.Visible = true;
+                    _loading.BringToFront();
+                    await Task.Delay(500);
+
+                    config.Tema = (CategoriaIcono)Enum.Parse(typeof(CategoriaIcono), temaElegido);
+
+                    JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
+                    TableroJuego.FormClosed += (sender2, arg) =>
+                    {
+                        MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
+                        Program.contexto.MainForm = nuevoMenu;
+                        nuevoMenu.Show();
+                    };
+                    Program.contexto.MainForm = TableroJuego;
+                    TableroJuego.Show();
+                    Dispose();
+                    Close();
                 };
-                Program.contexto.MainForm = TableroJuego;
-                TableroJuego.Show();
-                Dispose();
-                Close();
             };
         }
 
