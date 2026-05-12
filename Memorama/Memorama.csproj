@@ -68,6 +68,12 @@
     <Compile Include="Controls\Components\LoadingComponent.Designer.cs">
       <DependentUpon>LoadingComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Components\ThemeSelectorComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\ThemeSelectorComponent.Designer.cs">
+      <DependentUpon>ThemeSelectorComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Managers\JuegoUIManager.cs" />
     <Compile Include="Controls\MemoryButton.cs">
       <SubType>Component</SubType>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Components\OptionMenu.resx">
       <DependentUpon>OptionMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Components\ThemeSelectorComponent.resx">
+      <DependentUpon>ThemeSelectorComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
