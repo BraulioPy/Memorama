@@ -41,21 +41,30 @@ namespace Memorama
             _dbManager = dbManager;
             _motivatioService = motivationService;
 
+            ConfigurarMaterialSkin();
+            ConfigurarLoadingInicial();
+
+            DoubleBuffered = true;
+            Load += MenuPrincipal_load;
+        }
+
+        private void ConfigurarMaterialSkin()
+        {
             //Inicio de Sintaxis basica para MaterialSkin.2
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Green800, Primary.Green900, Primary.Green500, Accent.Green400, TextShade.WHITE);
             //Fin de Sintaxis basica para MaterialSkin.2
+        }
 
+        private void ConfigurarLoadingInicial()
+        {
             _loading = new LoadingComponent();
             _loading.Dock = DockStyle.Fill;
             _loading.Visible = true;
             Controls.Add(_loading);
             _loading.BringToFront();
-
-            DoubleBuffered = true;
-            Load += MenuPrincipal_load;
         }
 
         private async void MenuPrincipal_load(object sender, EventArgs e)
@@ -71,6 +80,7 @@ namespace Memorama
 
             List<GameRecordDTO> Top5Record = _motivatioService.ConsultarHistoricos(5);
 
+            // Inicializar componentes
             var _MenuBotones = new OptionMenu();
             //creamos el componente de Historics una vez al inicio
             var _Historics = new HistoricsComponent(Top5Record);
@@ -88,7 +98,21 @@ namespace Memorama
             _MenuBotones.Dock = DockStyle.Fill;// <--- aqui hacemos que se llene con el ancho dispoible
 
             
+            ConfigurarEventos(_MenuBotones, _Historics);
+            ConfigurarLayoutVisual(_MenuBotones, _Historics);
 
+            // ── Descongelar: el form se pinta completo de una sola vez ─────
+            SendMessage(Handle, WM_SETREDRAW, true, 0);
+            Invalidate(true);   // fuerza repintado completo de todos los hijos
+
+            // Loading sigue encima durante ese primer paint
+            _loading.BringToFront();
+            await Task.Delay(150);
+            _loading.Visible = false;
+        }
+
+        private void ConfigurarEventos(OptionMenu _MenuBotones, HistoricsComponent _Historics)
+        {
             //Primero evaluamos, ¿El usuario presionó Historicos?
             _MenuBotones.OnHistorics += async (sender2, ev) =>
             {
@@ -115,16 +139,14 @@ namespace Memorama
                 _loading.Visible = false;
             };
 
-            tableroLayoutPanel.Controls.Add(_Historics, 0, 3);
-            tableroLayoutPanel.Controls.Add(_MenuBotones, 0, 3);
-
             //Si el usuario no presionó la opcion de ver los historicos, entonces la ejecucion sigue normal
             List<MenuButtonModelView> BotonesDisponibles = new List<MenuButtonModelView>
-            {
-                new MenuButtonModelView { _ModoDeJuego = "FÁCIL",      _CartasTotales = 16, _Segundos = 180, ColorHex = "#D5EDDF" },
-                new MenuButtonModelView { _ModoDeJuego = "INTERMEDIO", _CartasTotales = 32, _Segundos = 120, ColorHex = "#F1F1D0" },
-                new MenuButtonModelView { _ModoDeJuego = "DÍFICIL",    _CartasTotales = 50, _Segundos =  90, ColorHex = "#FADAD5" }
-            };
+        {
+            new MenuButtonModelView { _ModoDeJuego = "FÁCIL",      _CartasTotales = 16, _Segundos = 180, ColorHex = "#D5EDDF" }, //Verde muuuuy clarito
+            new MenuButtonModelView { _ModoDeJuego = "INTERMEDIO", _CartasTotales = 32, _Segundos = 120, ColorHex = "#F1F1D0" }, //Amarillo pastel
+            new MenuButtonModelView { _ModoDeJuego = "DÍFICIL",    _CartasTotales = 50, _Segundos =  90, ColorHex = "#FADAD5" }, //Rojo pastel
+            new MenuButtonModelView { _ModoDeJuego = "DÍFICIL",    _CartasTotales = 50, _Segundos =  90, ColorHex = "#FADAD5" } //Rojo pastel
+        };
             _MenuBotones.SetConfiguracion(BotonesDisponibles);
 
             _MenuBotones.ConsultarConfiguracionDePartida += async (config) =>
@@ -164,6 +186,16 @@ namespace Memorama
                     Close();
                 };
             };
+        }
+
+        private void ConfigurarLayoutVisual(OptionMenu _MenuBotones, HistoricsComponent _Historics)
+        {
+            _Historics.Dock = DockStyle.Fill;
+            _Historics.Visible = false;
+            _MenuBotones.Dock = DockStyle.Fill;// <--- aqui hacemos que se llene con el ancho dispoible
+
+            tableroLayoutPanel.Controls.Add(_Historics, 0, 4);
+            tableroLayoutPanel.Controls.Add(_MenuBotones, 0, 4);
 
             //Aqui ya empieza lo que yo he cambiado, ademas de algunos cambios anteriores, pero pequeños
 
@@ -171,6 +203,7 @@ namespace Memorama
             tableroLayoutPanel.Parent = panel1;
             tableroLayoutPanel.BackColor = Color.Transparent;
 
+            // Configuración Título
             lblTitulo.Parent = panel1;
             lblTitulo.BackColor = Color.Transparent;
             lblTitulo.Anchor = AnchorStyles.Bottom;
@@ -179,9 +212,11 @@ namespace Memorama
             lblTitulo.AutoSize = true;
             tableroLayoutPanel.SetRow(lblTitulo, 1);
             tableroLayoutPanel.SetColumn(lblTitulo, 0);
+            lblTitulo.Margin = new Padding(0, 0, 0, 10);
             lblTitulo.Location = new Point((panel1.Width - lblTitulo.Width) / 2, 20);
             lblTitulo.BringToFront();
 
+            // Configuración Créditos
             lblcreditos.BackColor = Color.Transparent;
             lblcreditos.Anchor = AnchorStyles.None;
             lblcreditos.Font = new Font("Century Gothic", 24, FontStyle.Regular);
@@ -189,19 +224,15 @@ namespace Memorama
             lblcreditos.AutoSize = true;
             tableroLayoutPanel.SetRow(lblcreditos, 2);
             tableroLayoutPanel.SetColumn(lblcreditos, 0);
+            lblcreditos.Anchor = AnchorStyles.Bottom;
+            lblcreditos.Margin = new Padding(0, 10, 0, 0);
             lblcreditos.BringToFront();
 
+            // Configuración Menú Botones
             _MenuBotones.BackColor = Color.Transparent;
-            _MenuBotones.Size = new Size(400, 250);
-
-            // ── Descongelar: el form se pinta completo de una sola vez ─────
-            SendMessage(Handle, WM_SETREDRAW, true, 0);
-            Invalidate(true);   // fuerza repintado completo de todos los hijos
-
-            // Loading sigue encima durante ese primer paint
-            _loading.BringToFront();
-            await Task.Delay(150);
-            _loading.Visible = false;
+            _MenuBotones.Size = new Size(400, 320);
+            tableroLayoutPanel.SetRow(_MenuBotones, 4);
+            tableroLayoutPanel.SetColumn(_MenuBotones, 0);
         }
     }
 }
