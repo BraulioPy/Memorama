@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Memorama.Application.Interfaces;
+using Memorama.Application.Services;
+using Memorama.Infrastructure.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,15 +11,33 @@ namespace Memorama
 {
     internal static class Program
     {
+        public static ApplicationContext contexto;
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // Agregamos "System.Windows.Forms." antes de cada Application para evitar que la situación esta se confunda con el
+            //Memorama.Application va?
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+
+            // 1. Instanciamos el servicio (la lógica) aquí, fuera del formulario
+            // 1. Creamos el proveedor de iconos real (Infrastructure)
+            IIconService iconProvider = new IconService();
+            IGameService gameService = new GameService(iconProvider);
+            IPersistenceService dbManager = new PersistenceService();
+            IMotivationService motivationService = new MotivationService(dbManager);
+
+            contexto = new ApplicationContext();
+            MenuPrincipal menu = new MenuPrincipal(gameService, dbManager, motivationService);
+            contexto.MainForm = menu;
+            menu.Show();
+
+            // 2. Se lo pasamos al formulario por el constructor
+            // Esto es lo que hace que la arquitectura sea flexible
+            System.Windows.Forms.Application.Run(contexto);
         }
     }
 }

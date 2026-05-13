@@ -41,8 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Constants\StorageKeys.cs" />
+    <Compile Include="DTOs\OnTime\OnTimeGameDataInfoDTO.cs" />
+    <Compile Include="DTOs\Records\GameRecordDTO.cs" />
+    <Compile Include="Interfaces\IGameService.cs" />
+    <Compile Include="Interfaces\IIconService.cs" />
+    <Compile Include="Interfaces\IMotivationService.cs" />
+    <Compile Include="Interfaces\IPersistenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\MotivationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Memorama.Domain\Memorama.Domain.csproj">
@@ -50,5 +58,6 @@
       <Name>Memorama.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

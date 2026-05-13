@@ -33,8 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialSkin, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialSkin.2.2.3.1\lib\net461\MaterialSkin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +50,72 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Controls\Components\ButtonOption.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\ButtonOption.Designer.cs">
+      <DependentUpon>ButtonOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Components\HistoricsComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\HistoricsComponent.Designer.cs">
+      <DependentUpon>HistoricsComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Components\LoadingComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\LoadingComponent.Designer.cs">
+      <DependentUpon>LoadingComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Components\ThemeSelectorComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\ThemeSelectorComponent.Designer.cs">
+      <DependentUpon>ThemeSelectorComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Managers\JuegoUIManager.cs" />
+    <Compile Include="Controls\MemoryButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\OptionMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Components\OptionMenu.Designer.cs">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MenuPrincipal.Designer.cs">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JuegoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\JuegoForm.Designer.cs">
+      <DependentUpon>JuegoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\Components\ButtonOption.resx">
+      <DependentUpon>ButtonOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Components\HistoricsComponent.resx">
+      <DependentUpon>HistoricsComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Components\OptionMenu.resx">
+      <DependentUpon>OptionMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Components\ThemeSelectorComponent.resx">
+      <DependentUpon>ThemeSelectorComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\JuegoForm.resx">
+      <DependentUpon>JuegoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +124,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -72,6 +136,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\MaterialSymbols_28.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -89,6 +156,9 @@
       <Project>{d1ae6133-139b-4365-a39c-90801ce4a642}</Project>
       <Name>Memorama.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Gemini_Generated_Image_2zamzh2zamzh2zam.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
