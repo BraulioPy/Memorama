@@ -83,8 +83,12 @@ namespace Memorama
             //creamos el componente de Historics una vez al inicio
             var _Historics = new HistoricsComponent(Top5Record);
 
-            ConfigurarEventos(_MenuBotones, _Historics);
-            ConfigurarLayoutVisual(_MenuBotones, _Historics);
+            //se crea el selector
+            var _selectorTemas = new ThemeSelectorComponent();
+            _selectorTemas.Visible = false;
+
+            ConfigurarEventos(_MenuBotones, _Historics, _selectorTemas);
+            ConfigurarLayoutVisual(_MenuBotones, _Historics,_selectorTemas);
 
             // ── Descongelar: el form se pinta completo de una sola vez ─────
             SendMessage(Handle, WM_SETREDRAW, true, 0);
@@ -96,7 +100,7 @@ namespace Memorama
             _loading.Visible = false;
         }
 
-        private void ConfigurarEventos(OptionMenu _MenuBotones, HistoricsComponent _Historics)
+        private void ConfigurarEventos(OptionMenu _MenuBotones, HistoricsComponent _Historics, ThemeSelectorComponent _selectorTemas)
         {
             //Primero evaluamos, ¿El usuario presionó Historicos?
             _MenuBotones.OnHistorics += async (sender2, ev) =>
@@ -139,23 +143,40 @@ namespace Memorama
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(500);
-                config.Tema = CategoriaIcono.Maps; //EJEMPLO DE COMO CAMBIAR EL TEMA
 
-                JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
-                TableroJuego.FormClosed += (sender2, arg) =>
+                List<string> temas = Enum.GetNames(typeof(CategoriaIcono)).ToList();
+
+                _selectorTemas.ConfigurarTemas(temas);
+
+                _loading.Visible = false;
+                _selectorTemas.Visible = true;
+                _selectorTemas.BringToFront();
+
+                _selectorTemas.OnTemaSeleccionado += async (temaElegido) =>
                 {
-                    MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
-                    Program.contexto.MainForm = nuevoMenu;
-                    nuevoMenu.Show();
+                    _selectorTemas.Visible = false;
+                    _loading.Visible = true;
+                    _loading.BringToFront();
+                    await Task.Delay(500);
+
+                    //asignamos el tema elegido
+                    config.Tema = (CategoriaIcono)Enum.Parse(typeof(CategoriaIcono), temaElegido);
+
+                    JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
+                    TableroJuego.FormClosed += (sender2, arg) =>
+                    {
+                        MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
+                        Program.contexto.MainForm = nuevoMenu;
+                        nuevoMenu.Show();
+                    };
+                    Program.contexto.MainForm = TableroJuego;
+                    TableroJuego.Show();
+                    this.Dispose();
                 };
-                Program.contexto.MainForm = TableroJuego;
-                TableroJuego.Show();
-                Dispose();
-                Close();
             };
         }
 
-        private void ConfigurarLayoutVisual(OptionMenu _MenuBotones, HistoricsComponent _Historics)
+        private void ConfigurarLayoutVisual(OptionMenu _MenuBotones, HistoricsComponent _Historics, ThemeSelectorComponent _selectorTemas)
         {
             _Historics.Dock = DockStyle.Fill;
             _Historics.Visible = false;
@@ -200,6 +221,12 @@ namespace Memorama
             _MenuBotones.Size = new Size(400, 320);
             tableroLayoutPanel.SetRow(_MenuBotones, 4);
             tableroLayoutPanel.SetColumn(_MenuBotones, 0);
+
+            //Configuracion del ThemeSelectorComponent
+            this.Controls.Add(_selectorTemas); // Al formulario, no al panel
+            _selectorTemas.AutoSize = true;
+            _selectorTemas.Location = new Point((this.Width - _selectorTemas.Width) / 2, (this.Height - _selectorTemas.Height) / 2);
+            _selectorTemas.BringToFront();
         }
     }
 }

@@ -53,7 +53,7 @@
             this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableroLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.33334F));
-            this.tableroLayoutPanel.Size = new System.Drawing.Size(740, 663);
+            this.tableroLayoutPanel.Size = new System.Drawing.Size(756, 702);
             this.tableroLayoutPanel.TabIndex = 0;
             // 
             // lblTitulo
@@ -62,7 +62,7 @@
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Engravers MT", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.lblTitulo.Location = new System.Drawing.Point(17, 0);
+            this.lblTitulo.Location = new System.Drawing.Point(25, 0);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(705, 150);
             this.lblTitulo.TabIndex = 0;
@@ -74,7 +74,7 @@
             this.lblcreditos.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblcreditos.AutoSize = true;
             this.lblcreditos.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblcreditos.Location = new System.Drawing.Point(297, 150);
+            this.lblcreditos.Location = new System.Drawing.Point(305, 160);
             this.lblcreditos.Name = "lblcreditos";
             this.lblcreditos.Size = new System.Drawing.Size(146, 22);
             this.lblcreditos.TabIndex = 1;
@@ -89,7 +89,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 52);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(740, 663);
+            this.panel1.Size = new System.Drawing.Size(756, 702);
             this.panel1.TabIndex = 1;
             // 
             // MenuPrincipal
@@ -98,7 +98,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(744, 717);
+            this.ClientSize = new System.Drawing.Size(760, 756);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
