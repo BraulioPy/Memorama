@@ -12,7 +12,7 @@ public class JuegoUIManager
         _contenedor = contenedor;
     }
 
-    public void MostrarAviso(string mensaje, int segundos)
+    public void MostrarAviso(string mensaje, int segundos, Control panelTablero)
     {
         int duracionMs = segundos * 1000;
 
@@ -38,15 +38,39 @@ public class JuegoUIManager
         panelAviso.Controls.Add(lblTexto);
         _contenedor.Controls.Add(panelAviso);
 
-        // 4. UBICACIÓN (Centrado horizontal, un cuarto arriba en Y)
-        int posX = (_contenedor.Width - panelAviso.Width) / 2;
-        int posY = (_contenedor.Height - panelAviso.Height) / 5; // Un poco más arriba para que no estorbe
-        panelAviso.Location = new Point(posX, posY);
+        // 4. UBICACIÓN INTELIGENTE (Responsiva al tablero)
+        int margen = 20;
+        int posX, posY;
+        string direccionAnimacion = "Bajar"; // Por defecto baja desde el top
 
+        // Verificamos si el aviso cabe arriba del tablero
+        if (panelTablero.Top > (panelAviso.Height + margen + 10))
+        {
+            // Hay espacio arriba: Centrado y con aire respecto al tablero
+            posX = (_contenedor.Width - panelAviso.Width) / 2;
+            posY = panelTablero.Top - panelAviso.Height - margen;
+            direccionAnimacion = "Bajar";
+        }
+        else if ((_contenedor.Height - panelTablero.Bottom) > (panelAviso.Height + margen + 10))
+        {
+            // No hay espacio arriba, pero hay espacio ABAJO
+            posX = (_contenedor.Width - panelAviso.Width) / 2;
+            posY = panelTablero.Bottom + margen;
+            direccionAnimacion = "Subir";
+        }
+        else
+        {
+            // El tablero es gigante (Modo Rétame): Lo mandamos a la DERECHA
+            posX = _contenedor.Width - panelAviso.Width - margen;
+            posY = margen + 50; // Un poco abajo del título
+            direccionAnimacion = "Izquierda";
+        }
+
+        panelAviso.Location = new Point(posX, posY);
         panelAviso.BringToFront();
 
-        // 5. ANIMACIÓN Y AUTODESTRUCCIÓN
-        AnimarEntrada(panelAviso, posY);
+        // 5. ANIMACIÓN ADAPTATIVA
+        AnimarEntradaDinamica(panelAviso, posX, posY, direccionAnimacion);
 
         var timer = new Timer { Interval = duracionMs };
         timer.Tick += (s, e) => {
@@ -62,13 +86,31 @@ public class JuegoUIManager
     [System.Runtime.InteropServices.DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
     private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
 
-    private void AnimarEntrada(Control control, int destinoY)
+    private void AnimarEntradaDinamica(Control control, int destinoX, int destinoY, string direccion)
     {
-        control.Top = destinoY - 30; // Empieza un poco más arriba
         Timer t = new Timer { Interval = 15 };
+
+        // Configuración inicial según dirección
+        if (direccion == "Bajar") control.Top = destinoY - 30;
+        else if (direccion == "Subir") control.Top = destinoY + 30;
+        else if (direccion == "Izquierda") control.Left = destinoX + 30;
+
         t.Tick += (s, e) => {
-            if (control.Top < destinoY) control.Top += 2; // Baja suavemente
-            else { t.Stop(); t.Dispose(); }
+            bool llego = false;
+            if (direccion == "Bajar")
+            {
+                if (control.Top < destinoY) control.Top += 3; else llego = true;
+            }
+            else if (direccion == "Subir")
+            {
+                if (control.Top > destinoY) control.Top -= 3; else llego = true;
+            }
+            else if (direccion == "Izquierda")
+            {
+                if (control.Left > destinoX) control.Left -= 3; else llego = true;
+            }
+
+            if (llego) { t.Stop(); t.Dispose(); }
         };
         t.Start();
     }
