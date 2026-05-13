@@ -124,11 +124,11 @@ namespace Memorama
             // Suscribirnos a los eventos del servicio
             _gameService.OnCartaRevelada = (idx, contenido) => ActualizarBoton(idx, contenido);
             _gameService.OnParejaEncontrada = (idx1, idx2) => {
-                _uiManager.MostrarAviso("¡Pareja encontrada!", 3);
+                _uiManager.MostrarAviso("¡Pareja encontrada!", 3, panelTablero);
                 MarcarPareja(idx1, idx2);
             };
             _gameService.OnParejaNoEncontrada = (idx1, idx2) => {
-                _uiManager.MostrarAviso("¡Inténtalo Nuevamente!", 3);
+                _uiManager.MostrarAviso("¡Inténtalo Nuevamente!", 3, panelTablero);
                 OcultarPareja(idx1, idx2);
 
             };
@@ -180,22 +180,25 @@ namespace Memorama
             panelTablero.Controls.Clear();
             _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos, _gameInfo.Tema);
 
-            //YIYI cambios
-
+            // --- Configuración Responsiva (YIYI Senior Edition) ---
             int btnSize = 80, espaciado = 5;
 
-            int columnas = (_gameInfo.CartasTotales == 16) ? 4 : (_gameInfo.CartasTotales == 32) ? 8 : (_gameInfo.CartasTotales == 50) ? 10 : 4;
-            //es para calcular automaticamente las columnas para una cuadricula mas cuadrada
+            // 1. Calculamos las FILAS primero para forzar el crecimiento horizontal
+            int filas = (int)Math.Sqrt(_gameInfo.CartasTotales);
 
-            panelTablero.Width = columnas * (btnSize + espaciado * 2) + espaciado * 2;
-            //ajusta el ancho del tablero para que quepan exctamente las columnas
+            // 2. Despejamos las columnas. Si sobran cartas, se añade una columna a la DERECHA
+            int columnas = (int)Math.Ceiling((double)_gameInfo.CartasTotales / filas);
 
+            // 3. Ajustamos el CONTENEDOR para que el desborde sea horizontal
+            // Fijamos el alto para que el FlowLayoutPanel no crezca hacia abajo
+            panelTablero.Height = filas * (btnSize + (espaciado * 2)) + (espaciado * 2);
+            panelTablero.Width = columnas * (btnSize + (espaciado * 2)) + (espaciado * 2);
+
+            // 4. Centramos el tablero en el fondo
             panelTablero.Left = (PanelFondo.Width - panelTablero.Width) / 2;
-            //recentra el tablero despues de cambiar el ancho
+            panelTablero.Top = (PanelFondo.Height - panelTablero.Height) / 2;
 
-            //Fin YIYI cambios
-
-            // Generación automática de botones
+            // --- Generación de Botones ---
             for (int i = 0; i < _gameInfo.CartasTotales; i++)
             {
                 var btn = new MemoryButton(i);
@@ -203,7 +206,7 @@ namespace Memorama
                 btn.Click += (s, ev) => _gameService.SeleccionarCarta(btn.Indice);
                 panelTablero.Controls.Add(btn);
             }
-            //YIYIcambio
+
             panelTablero.Invalidate();
             timer_partida.Start();
             button21.Visible = false;
@@ -224,7 +227,7 @@ namespace Memorama
             {
                 _uiManager.MostrarAviso(_motivationService.GenerarMensajeFinal(
                     OnTimeGameInfo
-                    ), 6); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
+                    ), 6, panelTablero); //Primero es el mensaje string y luego el tiempo que se va a mostrar en pantalla, en segundos
             }
 
         }

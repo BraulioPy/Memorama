@@ -130,7 +130,7 @@ namespace Memorama
             new MenuButtonModelView { _ModoDeJuego = "FÁCIL",      _CartasTotales = 16, _Segundos = 180, ColorHex = "#D5EDDF" }, //Verde muuuuy clarito
             new MenuButtonModelView { _ModoDeJuego = "INTERMEDIO", _CartasTotales = 32, _Segundos = 120, ColorHex = "#F1F1D0" }, //Amarillo pastel
             new MenuButtonModelView { _ModoDeJuego = "DÍFICIL",    _CartasTotales = 50, _Segundos =  90, ColorHex = "#FADAD5" }, //Rojo pastel
-            new MenuButtonModelView { _ModoDeJuego = "DÍFICIL",    _CartasTotales = 50, _Segundos =  90, ColorHex = "#FADAD5" } //Rojo pastel
+            new MenuButtonModelView { _ModoDeJuego = "¡RETAME!",    _CartasTotales = (new Random().Next(16,26) * 2), _Segundos =  (new Random().Next(90,120)), ColorHex = "#D6BCFA" } //Rojo pastel
         };
             _MenuBotones.SetConfiguracion(BotonesDisponibles);
 
