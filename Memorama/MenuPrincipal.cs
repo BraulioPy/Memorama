@@ -25,6 +25,7 @@ namespace Memorama
         private readonly IGameService _gameService;//Lo uso para luego mandarle la inyección del servicio al form que invoque jaja
         private readonly IPersistenceService _dbManager;
         private readonly IMotivationService _motivatioService;
+        private readonly JuegoUIManager _uiManager;
         private LoadingComponent _loading;
 
         // Congela el dibujado a nivel de Windows
@@ -35,7 +36,7 @@ namespace Memorama
         public MenuPrincipal(IGameService gameService, IPersistenceService dbManager, IMotivationService motivationService)
         {
             InitializeComponent();
-
+            _uiManager = new JuegoUIManager(this);
             _gameService = gameService;
             _dbManager = dbManager;
             _motivatioService = motivationService;
@@ -108,8 +109,10 @@ namespace Memorama
                 _MenuBotones.Hide();
                 _Historics.Show();
                 _Historics.BringToFront();
+                _uiManager.MostrarAviso("Cargando Datos!", 1, _loading);
                 await Task.Delay(100);
                 _loading.Visible = false;
+                _uiManager.MostrarAviso("¡Datos Cargados Correctamente!", 2, _Historics);
             };
 
             _Historics.OnRegresar += async (sender2, ev) =>
