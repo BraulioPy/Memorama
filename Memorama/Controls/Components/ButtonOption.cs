@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using Memorama.Domain.ValueObjects;
+using Memorama.Infrastructure.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,9 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
-using Memorama.Domain.ValueObjects;
 
 namespace Memorama.Controls.Components
 {
@@ -52,6 +53,7 @@ namespace Memorama.Controls.Components
 
         private void ButtonDesign_Click(object sender, EventArgs e)
         {
+            SoundService.Instance.PlayIrrelevantButton();
             ConsultarConfiguracionBoton?.Invoke(ConfigurationGame);
         }
 

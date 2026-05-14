@@ -13,5 +13,7 @@ namespace Memorama.Application.Interfaces
         void PlayWin();
         void PlayGameOver();
         void StopMusic();
+        void PlayRelevantButton();
+        void PlayIrrelevantButton();
     }
 }

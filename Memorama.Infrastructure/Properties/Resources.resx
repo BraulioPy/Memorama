@@ -118,6 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="_buttonClickCommon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\_buttonClickCommon.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>sonido que se usa para botones de uso más comun o dinamico</comment>
+  </data>
+  <data name="_buttonClickRelevant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\_buttonClickRelevant.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>Boton usado para secciones del programa que sean un poco mas importantes</comment>
+  </data>
   <data name="_cardsFlipping" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\_cardsFlipping.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     <comment>Sonido que se ejecuta al barajear las cartas</comment>

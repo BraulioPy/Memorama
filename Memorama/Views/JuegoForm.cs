@@ -184,6 +184,7 @@ namespace Memorama
 
         private void button21_Click(object sender, EventArgs e)
         {
+            SoundService.Instance?.PlayRelevantButton();
             panelTablero.Controls.Clear();
             SoundService.Instance?.PlayFlippingCards();
             _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos, _gameInfo.Tema);

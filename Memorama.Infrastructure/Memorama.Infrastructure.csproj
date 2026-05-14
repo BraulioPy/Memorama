@@ -93,6 +93,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\_buttonClickCommon.wav" />
+    <Content Include="Resources\_buttonClickRelevant.wav" />
     <Content Include="Resources\_cardsFlipping.wav" />
     <Content Include="Resources\_lose.wav" />
     <Content Include="Resources\_win.wav" />

@@ -63,6 +63,24 @@ namespace Memorama.Infrastructure.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
+        public static System.IO.UnmanagedMemoryStream _buttonClickCommon {
+            get {
+                return ResourceManager.GetStream("_buttonClickCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream _buttonClickRelevant {
+            get {
+                return ResourceManager.GetStream("_buttonClickRelevant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
         public static System.IO.UnmanagedMemoryStream _cardsFlipping {
             get {
                 return ResourceManager.GetStream("_cardsFlipping", resourceCulture);

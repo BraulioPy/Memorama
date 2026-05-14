@@ -17,6 +17,8 @@ namespace Memorama.Infrastructure.Services
         private readonly SoundPlayer _WinSound;
         private readonly SoundPlayer _loseSound;
         private readonly SoundPlayer _flippingSound;
+        private readonly SoundPlayer _relevantSound;
+        private readonly SoundPlayer _irrelevantSound;
 
         public SoundService()
         {
@@ -26,16 +28,22 @@ namespace Memorama.Infrastructure.Services
             _WinSound = new SoundPlayer(Properties.Resources._win);
             _loseSound = new SoundPlayer(Properties.Resources._lose);
             _flippingSound = new SoundPlayer(Properties.Resources._cardsFlipping);
+            _relevantSound = new SoundPlayer(Properties.Resources._buttonClickRelevant);
+            _irrelevantSound = new SoundPlayer(Properties.Resources._buttonClickCommon);
         }
         public void PlayFlip() => _flipSound.Play();
         public void PlayFlippingCards() => _flippingSound.Play();
         public void PlayWin() => _WinSound.Play();
         public void PlayGameOver() => _loseSound.Play();
+        public void PlayRelevantButton() => _relevantSound.Play();
+        public void PlayIrrelevantButton() => _irrelevantSound.Play();
         public void StopMusic() { 
             _flipSound.Stop();
             _WinSound.Stop();
             _loseSound.Stop();
             _flippingSound.Stop();
+            _relevantSound.Stop();
+            _irrelevantSound.Stop();
         }
 
     }
