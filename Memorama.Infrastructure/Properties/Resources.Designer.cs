@@ -99,6 +99,15 @@ namespace Memorama.Infrastructure.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
+        public static System.IO.UnmanagedMemoryStream _loadingSuccesfull {
+            get {
+                return ResourceManager.GetStream("_loadingSuccesfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
         public static System.IO.UnmanagedMemoryStream _lose {
             get {
                 return ResourceManager.GetStream("_lose", resourceCulture);
