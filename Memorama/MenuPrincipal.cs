@@ -118,7 +118,8 @@ namespace Memorama
                 _uiManager.MostrarAviso("Cargando Datos!", 1, _loading);
                 await Task.Delay(100);
                 _loading.Visible = false;
-                _uiManager.MostrarAviso("¡Datos Cargados Correctamente!", 2, _Historics);
+                SoundService.Instance?.PlayLoadingSuccesfull();
+                _uiManager.MostrarAviso("¡Datos Cargados Correctamente!", 3, _Historics);
             };
 
             _Historics.OnRegresar += async (sender2, ev) =>

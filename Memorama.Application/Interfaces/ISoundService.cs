@@ -15,5 +15,6 @@ namespace Memorama.Application.Interfaces
         void StopMusic();
         void PlayRelevantButton();
         void PlayIrrelevantButton();
+        void PlayLoadingSuccesfull();
     }
 }

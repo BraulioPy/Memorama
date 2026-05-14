@@ -134,6 +134,10 @@
     <value>..\Resources\_flip.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     <comment>Sonido del flip para las cards</comment>
   </data>
+  <data name="_loadingSuccesfull" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\_loadingSuccesfull.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>este audio se utilizará para cuando algo cargue correctamente</comment>
+  </data>
   <data name="_lose" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\_lose.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     <comment>Sonido que se escucha al perder la partida</comment>
