@@ -7,6 +7,7 @@ using Memorama.Controls;
 using Memorama.Controls.Components;
 using Memorama.Domain.Enums;
 using Memorama.Domain.ValueObjects;
+using Memorama.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -106,6 +107,7 @@ namespace Memorama
             //Primero evaluamos, ¿El usuario presionó Historicos?
             _MenuBotones.OnHistorics += async (sender2, ev) =>
             {
+                SoundService.Instance?.PlayRelevantButton();
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(400);
@@ -116,11 +118,13 @@ namespace Memorama
                 _uiManager.MostrarAviso("Cargando Datos!", 1, _loading);
                 await Task.Delay(100);
                 _loading.Visible = false;
-                _uiManager.MostrarAviso("¡Datos Cargados Correctamente!", 2, _Historics);
+                SoundService.Instance?.PlayLoadingSuccesfull();
+                _uiManager.MostrarAviso("¡Datos Cargados Correctamente!", 3, _Historics);
             };
 
             _Historics.OnRegresar += async (sender2, ev) =>
             {
+                SoundService.Instance?.PlayRelevantButton();
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(400);
@@ -143,6 +147,7 @@ namespace Memorama
 
             _MenuBotones.ConsultarConfiguracionDePartida += async (config) =>
             {
+                SoundService.Instance?.PlayRelevantButton();
                 _loading.Visible = true;
                 _loading.BringToFront();
                 await Task.Delay(500);
@@ -157,6 +162,7 @@ namespace Memorama
 
                 _selectorTemas.OnTemaSeleccionado += async (temaElegido) =>
                 {
+                    SoundService.Instance?.PlayRelevantButton();
                     _selectorTemas.Visible = false;
                     _loading.Visible = true;
                     _loading.BringToFront();
@@ -168,6 +174,7 @@ namespace Memorama
                     JuegoForm TableroJuego = new JuegoForm(_gameService, config, _dbManager, _motivatioService);
                     TableroJuego.FormClosed += (sender2, arg) =>
                     {
+                        SoundService.Instance?.PlayRelevantButton();
                         MenuPrincipal nuevoMenu = new MenuPrincipal(_gameService, _dbManager, _motivatioService);
                         Program.contexto.MainForm = nuevoMenu;
                         nuevoMenu.Show();

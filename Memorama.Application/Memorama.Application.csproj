@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\IIconService.cs" />
     <Compile Include="Interfaces\IMotivationService.cs" />
     <Compile Include="Interfaces\IPersistenceService.cs" />
+    <Compile Include="Interfaces\ISoundService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\MotivationService.cs" />
