@@ -27,6 +27,7 @@ namespace Memorama
             // 1. Creamos el proveedor de iconos real (Infrastructure)
             IIconService iconProvider = new IconService();
             IGameService gameService = new GameService(iconProvider);
+            ISoundService soundService = new SoundService();
             IPersistenceService dbManager = new PersistenceService();
             IMotivationService motivationService = new MotivationService(dbManager);
 
