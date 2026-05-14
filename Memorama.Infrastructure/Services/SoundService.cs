@@ -11,6 +11,8 @@ namespace Memorama.Infrastructure.Services
     public class SoundService : ISoundService
     {
         // Accedemos a los recursos internos de la capa de Infrastructure
+        // Instancia única (Singleton simplificado)
+        public static ISoundService Instance { get; private set; }
         private readonly SoundPlayer _flipSound;
         private readonly SoundPlayer _WinSound;
         private readonly SoundPlayer _loseSound;
@@ -18,6 +20,7 @@ namespace Memorama.Infrastructure.Services
 
         public SoundService()
         {
+            Instance = this; // Asignamos la instancia actual a la propiedad estática para que sea accesible desde cualquier parte de la aplicación
             // Properties.Resources apuntará a los archivos que metiste en esta capa
             _flipSound = new SoundPlayer(Properties.Resources._flip);
             _WinSound = new SoundPlayer(Properties.Resources._win);

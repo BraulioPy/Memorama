@@ -18,6 +18,7 @@ using Memorama.Application.DTOs.Records;
 using System.Drawing.Text;
 using Memorama.Application.DTOs.OnTime;
 using Memorama.Controls.Components;
+using Memorama.Infrastructure.Services;
 namespace Memorama
 {
     public partial class JuegoForm : MaterialForm
@@ -122,7 +123,10 @@ namespace Memorama
             ////Fin de Sintaxis basica para MaterialSkin.2
 
             // Suscribirnos a los eventos del servicio
-            _gameService.OnCartaRevelada = (idx, contenido) => ActualizarBoton(idx, contenido);
+            _gameService.OnCartaRevelada = (idx, contenido) => {
+                SoundService.Instance?.PlayFlip();
+                ActualizarBoton(idx, contenido);
+            };
             _gameService.OnParejaEncontrada = (idx1, idx2) => {
                 _uiManager.MostrarAviso("¡Pareja encontrada!", 3, panelTablero);
                 MarcarPareja(idx1, idx2);
@@ -150,6 +154,7 @@ namespace Memorama
                 // Consultamos al servicio para saber por qué terminó
                 if (_gameService.Segundos <= 0)
                 {
+                    SoundService.Instance?.PlayGameOver();
                     gameFinishedData.EsVictoria = false;
                     MessageBox.Show("¡Game Over! Se acabó el tiempo.");
                     this.Close(); // Cerramos el formulario para volver al menú principal
@@ -158,12 +163,14 @@ namespace Memorama
                 {
                     if (_gameService.Intentos > _gameInfo.Intentos)
                     {
+                        SoundService.Instance?.PlayGameOver();
                         gameFinishedData.EsVictoria = false;
                         MessageBox.Show($"¡Has excedido el numero de {_gameInfo.Intentos} intentos!");
                         this.Close();
                     }
                     else
                     {
+                        SoundService.Instance?.PlayWin();
                         gameFinishedData.EsVictoria = true;
                         MessageBox.Show("¡Felicidades! Completaste el tablero.");
                         this.Close();
@@ -178,6 +185,7 @@ namespace Memorama
         private void button21_Click(object sender, EventArgs e)
         {
             panelTablero.Controls.Clear();
+            SoundService.Instance?.PlayFlippingCards();
             _gameService.IniciarNuevaPartida(_gameInfo.CartasTotales, _gameInfo.Segundos, _gameInfo.Intentos, _gameInfo.Tema);
 
             // --- Configuración Responsiva (YIYI Senior Edition) ---
